@@ -1,12 +1,46 @@
 ### About
 
+<p align="center">
+  <img src="https://github.com/VladK9/UIControlView/blob/main/Preview.png" width="700">
+</p>
+
 Bottom view with multiple actions
 
 ## Features
 - Highly customizable
+   - cornerRadius
+   - view width/height
+   - showHideIndicator
+   - closeTitle
+   - closeBackColor
+   - closeTintColor
+
+   **Each item settings**
+   ```swift
+   - onlyTitle(_ title: String)
+   - onlyIcon(_ icon: UIImage)
+   - TitleWithIcon(_ title: String, _ icon: UIImage)
+   ```
+   
+   Tint color
+   ```swift
+   - standard
+   - custom(_ color: UIColor)
+   - customHEX(_ hex: String)
+   - coloredImage(_ tintColor: UIColor)
+   ```
+    
+   Background color
+   ```swift
+   - standard
+   - clear
+   - custom(_ color: UIColor)
+   - customHEX(_ hex: String)
+   ```
+   
 - The ability to show one above the other view's
-![Preview image](https://github.com/VladK9/UIControlView/blob/main/Multiple%20view's.png)
+<p float="left">
+  <img src="https://github.com/VladK9/UIControlView/blob/main/Multiple%20view's.png" width="500">
+</p>
 - Swipe to hide or press button
 - Support dark/light theme
-
-![Preview image](https://github.com/VladK9/UIControlView/blob/main/Preview.png)
