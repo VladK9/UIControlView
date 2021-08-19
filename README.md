@@ -42,5 +42,6 @@ Bottom view with multiple actions
 <p float="left">
   <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Multiple view's.png" width="500">
 </p>
+
 - Swipe to hide or press button
 - Support dark/light theme
