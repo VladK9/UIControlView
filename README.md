@@ -11,11 +11,13 @@ Bottom view with multiple actions
    - cornerRadius
    - view width/height
    - showHideIndicator
-   - closeTitle
-   - closeBackColor
-   - closeTintColor
+   - close button title
+   - close button background color
+   - close button tint color
 
    **Each item settings**
+   
+   Item
    ```swift
    - onlyTitle(_ title: String)
    - onlyIcon(_ icon: UIImage)
