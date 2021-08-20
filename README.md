@@ -1,13 +1,11 @@
-<img align="left" src="https://github.com/VladK9/UIControlView/blob/main/Assets/iPhone 11 Pro preview.png" width="240"/>
-
 
 ### About
 
-Bottom view with multiple actions
-
-<p align="left">
-  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Preview.png" width="300">
+<p align="center">
+  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Preview.png" width="500">
 </p>
+
+Bottom view with multiple actions
 
 ## Features
 
@@ -19,30 +17,30 @@ Bottom view with multiple actions
    - close button background color
    - close button tint color
 
-   ### Each item settings
+### Each item settings
    
-   Item
-   ```swift
-   - onlyTitle(_ title: String)
-   - onlyIcon(_ icon: UIImage)
-   - TitleWithIcon(_ title: String, _ icon: UIImage)
-   ```
+Item
+```swift
+- onlyTitle(_ title: String)
+- onlyIcon(_ icon: UIImage)
+- TitleWithIcon(_ title: String, _ icon: UIImage)
+```
    
-   Tint color
-   ```swift
-   - standard
-   - custom(_ color: UIColor)
-   - customHEX(_ hex: String)
-   - coloredImage(_ tintColor: UIColor)
-   ```
+Tint color
+```swift
+- standard
+- custom(_ color: UIColor)
+- customHEX(_ hex: String)
+- coloredImage(_ tintColor: UIColor)
+```
     
-   Background color
-   ```swift
-   - standard
-   - clear
-   - custom(_ color: UIColor)
-   - customHEX(_ hex: String)
-   ```
+Background color
+```swift
+- standard
+- clear
+- custom(_ color: UIColor)
+- customHEX(_ hex: String)
+```
    
 - The ability to show one above the other view's
 <p float="left">
