@@ -1,12 +1,16 @@
-### About
+<img align="left" src="https://github.com/VladK9/UIControlView/blob/main/Assets/iPhone 11 Pro preview.png" width="240"/>
 
-<p align="center">
-  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Preview.png" width="700">
-</p>
+
+### About
 
 Bottom view with multiple actions
 
+<p align="left">
+  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Preview.png" width="300">
+</p>
+
 ## Features
+
 - Highly customizable
    - cornerRadius
    - view width/height
@@ -15,7 +19,7 @@ Bottom view with multiple actions
    - close button background color
    - close button tint color
 
-   **Each item settings**
+   ### Each item settings
    
    Item
    ```swift
