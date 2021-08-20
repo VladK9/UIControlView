@@ -2,7 +2,8 @@
 ### About
 
 <p align="center">
-  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Preview.png" width="500">
+  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/iPhone 11 Pro preview.png" width="100">
+  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Preview.png" width="400">
 </p>
 
 Bottom view with multiple actions
