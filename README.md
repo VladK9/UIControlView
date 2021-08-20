@@ -2,8 +2,8 @@
 ### About
 
 <p align="center">
-  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/iPhone 11 Pro preview.png" width="100">
-  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Preview.png" width="400">
+  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/iPhone 11 Pro preview.png" width="110">
+  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Preview.png" width="350">
 </p>
 
 Bottom view with multiple actions
@@ -46,7 +46,7 @@ Bottom view with multiple actions
    
 - The ability to show one above the other view's
 <p float="left">
-  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Multiple view's.png" width="500">
+  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Multiple view's.png" width="400">
 </p>
 
 - Swipe to hide or press button
