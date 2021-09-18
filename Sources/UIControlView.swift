@@ -1,11 +1,3 @@
-//
-//  UIControlView.swift
-//  CardHolder
-//
-//  Created by Владислав on 15.01.2021.
-//  Copyright © 2021 Vlad Karlugin. All rights reserved.
-//
-
 import UIKit
 import Foundation
 
