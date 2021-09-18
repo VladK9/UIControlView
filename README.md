@@ -14,7 +14,8 @@ Bottom view with multiple actions
 - Highly customizable
    - cornerRadius
    - view width/height
-   - showHideIndicator
+   - show/hide indicator
+   - show with slide/fade animation
    - close button title
    - close button background color
    - close button tint color
