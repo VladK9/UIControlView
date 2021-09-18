@@ -52,3 +52,47 @@ Bottom view with multiple actions
 
 - Swipe to hide or press button
 - Support dark/light theme
+
+## Usage
+
+```swift
+let view = UIControlView.self
+let actions: [UIControlViewAction] = [
+    .init(item: .TitleWithIcon("Item 1", UIImage(systemName: "highlighter")!), tintColor: .customHEX("890596"), backColor: .custom(.purple), handler: { _ in
+    }),
+    .init(item: .TitleWithIcon("Item 2", UIImage(systemName: "folder")!), tintColor: .customHEX("#0C5AA9"), backColor: .custom(.blue), handler: { _ in
+    }),
+    .init(item: .TitleWithIcon("Item 3", UIImage(systemName: "trash")!), tintColor: .custom(.red), backColor: .custom(.red), handler: { _ in
+    })
+]
+      
+view.showHideIndicator = false
+view.closeTitle = "Close"
+view.closeBackColor = .black
+view.closeTintColor = .white
+view.showWithSlideAnimation = true
+view.delegate = self
+view.show(self, actions: actions)
+```
+
+## Delegate
+
+To get `hide method` or `order` of view, set the delegate with protocol `UIControlViewDelegate`:
+
+```swift
+func didHideView(_ method: HideMethod, _ order: HideOrder) {
+    if method == .isSwipe {
+        print("isSwipe")
+    } else if method == .isButton {
+        print("isButton")
+    }
+        
+    if order == .isMain {
+        print("isMain")
+    } else if order == .isSubview {
+        print("isSubview")
+    } else if order == .isAllClosed {
+        print("isAllClosed")
+    }
+}
+```
