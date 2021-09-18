@@ -1,9 +1,10 @@
 
 ### About
 
+
+
 <p align="center">
-  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/iPhone 11 Pro preview.png" width="110">
-  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Preview.png" width="350">
+  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Banner.png">
 </p>
 
 Bottom view with multiple actions
