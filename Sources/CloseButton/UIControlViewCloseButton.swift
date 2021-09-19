@@ -114,13 +114,10 @@ public class CloseView {
         return UIApplication.shared.delegate?.window ?? nil
     }()
     
+    //MARK: - Show
     public static func show(_ config: CloseConfig?, forVC: UIViewController) {
         currentConfig.append(config)
-        showCloseButton(config, forVC)
-    }
-    
-    //MARK: - showCloseButton
-    private static func showCloseButton(_ config: CloseConfig?, _ forVC: UIViewController) {
+        
         shared.CloseButton = UIControlViewCloseButton()
         shared.CloseButton?.update(config)
         
