@@ -111,9 +111,9 @@ class UIControlView {
             
          var viewY: CGFloat {
              if bottomPadding.isZero {
-                 return screen.height-(topPadding+bottomPadding+config.viewHeight+15+yPlus)
+                 return screen.height-settings.actionViewSize.height+bottomPadding+topPadding-yPlus
              } else {
-                 return screen.height-(topPadding+bottomPadding+config.viewHeight+5+yPlus)
+                 return screen.height-settings.actionViewSize.height-bottomPadding+topPadding-yPlus
              }
          }
             
