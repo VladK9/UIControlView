@@ -59,85 +59,79 @@ class UIControlView {
         }))
         
         var uuid = [Int]()
-        if queue.count <= maxView {
-            if queue.count == 0 {
-                let defID = [UIControlViewID.backViewID, UIControlViewID.containerViewID, UIControlViewID.hideViewID]
-                uuid = defID
-                queue.append(UIControlViewQueue(uuid: defID, config: config, actions: actions))
-                CloseView.show(hide, forVC: vc)
-            } else {
-                var wPlus: CGFloat {
-                    if queue.count+1 == 1 {
-                        return 0
-                    } else if queue.count+1 > 2 {
-                        return CGFloat(6 * queue.count+1)
-                    } else {
-                        return 6
-                    }
+        if queue.count == 0 {
+            let defID = [UIControlViewID.backViewID, UIControlViewID.containerViewID, UIControlViewID.hideViewID]
+            uuid = defID
+            queue.append(UIControlViewQueue(uuid: defID, config: config, actions: actions))
+            CloseView.show(hide, forVC: vc)
+        } else {
+            var wPlus: CGFloat {
+                if queue.count+1 == 1 {
+                    return 0
+                } else if queue.count+1 > 2 {
+                    return CGFloat(6 * queue.count+1)
+                } else {
+                    return 6
                 }
+            }
                 
-                let customConfig = UIControlViewConfig(viewWidth: config.viewWidth+wPlus,
+            let customConfig = UIControlViewConfig(viewWidth: config.viewWidth+wPlus,
                                                        viewHeight: config.viewHeight,
                                                        showHideIndicator: config.showHideIndicator)
                 
-                let lastID = [queue.last!.uuid![0]+1, queue.last!.uuid![1]+1, queue.last!.uuid![2]+1]
-                uuid = lastID
-                queue.append(UIControlViewQueue(uuid: lastID, config: customConfig, actions: actions))
-            }
-            
-            let actionView = UIControlViewItem.init(items: actions,
-                                                    viewSize: CGSize(width: queue.last!.config.viewWidth, height: queue.last!.config.viewHeight),
-                                                    config: queue.last!.config, uuid: uuid)
-            
-            vc.view.addSubview(actionView)
-            
-            let pan = UIPanGestureRecognizer(target: self, action: #selector(UIControlViewDrag(_:)))
-            pan.maximumNumberOfTouches = 1
-            pan.cancelsTouchesInView = true
-            actionView.addGestureRecognizer(pan)
-            
-            currentVC = vc
-            currentConfig = config
-            
-            var yPlus: CGFloat {
-                print(queue.count)
-                if queue.count == 1 {
-                    return 0
-                } else if queue.count > 2 {
-                    return CGFloat(4 * queue.count)-4
-                } else {
-                    return 4
-                }
-            }
-            
-            var viewY: CGFloat {
-                if bottomPadding.isZero {
-                    return screen.height-(topPadding+bottomPadding+config.viewHeight+15+yPlus)
-                } else {
-                    return screen.height-(topPadding+bottomPadding+config.viewHeight+5+yPlus)
-                }
-            }
-            
-            print(screen.height)
-            print(bottomPadding)
-            print(topPadding)
-            
-            actionView.center.x = UIApplication.shared.keyWindow!.frame.midX
-            
-            if showWithSlideAnimation {
-                actionView.layer.position.y = screen.height + bottomPadding + topPadding
-                
-                UIView.animate(withDuration: animationDuration, animations: {
-                    actionView.layer.position.y = viewY
-                })
-            } else {
-                actionView.alpha = 0
-                actionView.layer.position.y = viewY
-                UIView.animate(withDuration: animationDuration, animations: {
-                    actionView.alpha = 1
-                })
-            }
+            let lastID = [queue.last!.uuid![0]+1, queue.last!.uuid![1]+1, queue.last!.uuid![2]+1]
+            uuid = lastID
+            queue.append(UIControlViewQueue(uuid: lastID, config: customConfig, actions: actions))
         }
+            
+        let actionView = UIControlViewItem.init(items: actions,
+                                                viewSize: CGSize(width: queue.last!.config.viewWidth, height: queue.last!.config.viewHeight),
+                                                config: queue.last!.config, uuid: uuid)
+            
+        vc.view.addSubview(actionView)
+            
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(UIControlViewDrag(_:)))
+        pan.maximumNumberOfTouches = 1
+        pan.cancelsTouchesInView = true
+        actionView.addGestureRecognizer(pan)
+            
+        currentVC = vc
+        currentConfig = config
+            
+        var yPlus: CGFloat {
+            print(queue.count)
+            if queue.count == 1 {
+                return 0
+            } else if queue.count > 2 {
+                return CGFloat(4 * queue.count)-4
+            } else {
+                return 4
+            }
+         }
+            
+         var viewY: CGFloat {
+             if bottomPadding.isZero {
+                 return screen.height-(topPadding+bottomPadding+config.viewHeight+15+yPlus)
+             } else {
+                 return screen.height-(topPadding+bottomPadding+config.viewHeight+5+yPlus)
+             }
+         }
+            
+         actionView.center.x = UIApplication.shared.keyWindow!.frame.midX
+            
+         if showWithSlideAnimation {
+             actionView.layer.position.y = screen.height + bottomPadding + topPadding
+                
+             UIView.animate(withDuration: animationDuration, animations: {
+                 actionView.layer.position.y = viewY
+             })
+         } else {
+             actionView.alpha = 0
+             actionView.layer.position.y = viewY
+             UIView.animate(withDuration: animationDuration, animations: {
+                 actionView.alpha = 1
+             })
+         }
     }
     
     //MARK: - closeFirst
