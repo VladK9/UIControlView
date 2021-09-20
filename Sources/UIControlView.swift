@@ -230,8 +230,17 @@ class UIControlView {
     
     //MARK: - UIControlViewDrag
     @objc static private func UIControlViewDrag(_ sender: UIPanGestureRecognizer) {
-        let topPadding = CGFloat((UIApplication.shared.keyWindow?.safeAreaInsets.top)!)
-        let bottomPadding = CGFloat((UIApplication.shared.keyWindow?.safeAreaInsets.bottom)!)
+        let topPadding: CGFloat
+        let bottomPadding: CGFloat
+        
+        if #available(iOS 11.0, *) {
+            topPadding = currentVC.view.safeAreaInsets.top
+            bottomPadding = currentVC.view.safeAreaInsets.bottom
+        } else {
+            topPadding = currentVC.topLayoutGuide.length
+            bottomPadding = currentVC.bottomLayoutGuide.length
+        }
+        
         let screen = UIScreen.main.bounds
         let allScreen = topPadding + screen.height + bottomPadding
         
@@ -240,9 +249,9 @@ class UIControlView {
         
         var dismissDragSize: CGFloat {
             if bottomPadding.isZero {
-                return allScreen - (topPadding*4.65)
+                return allScreen - (topPadding*1.3)
             } else {
-                return allScreen - (bottomPadding*5.5)
+                return allScreen - (bottomPadding*4.4)
             }
         }
         
