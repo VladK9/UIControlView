@@ -120,7 +120,7 @@ class UIControlView {
             }
         }
         
-        actionView.center.x = UIApplication.shared.keyWindow!.frame.midX
+        actionView.center.x = currentVC.view.center.x
         
         if showWithSlideAnimation {
             actionView.layer.position.y = screen.height + bottomPadding + topPadding
