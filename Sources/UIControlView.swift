@@ -1,4 +1,3 @@
-
 import UIKit
 import Foundation
 
@@ -6,7 +5,6 @@ class UIControlView {
     
     let shared = UIControlView()
     
-    static private let maxView: Int = 2 // maximum 3 UIControlView (0..3)
     static private var currentVC = UIViewController()
     static private var currentConfig = UIControlViewConfig()
     
@@ -15,11 +13,15 @@ class UIControlView {
     static public var viewWidth: CGFloat = UIScreen.main.bounds.width-26
     static public var viewHeight: CGFloat = 80
     
-    // Show/Hide indicator or not
+    // Corner radius
+    static public var cornerRadius: CGFloat = 9
+    
+    // Show/Hide indicator
     static public var showHideIndicator: Bool = false
     
     // Show/Hide view with slide animation or not
     static public var showWithSlideAnimation: Bool = true
+    
     // Animation duration
     static private var animationDuration: TimeInterval {
         if showWithSlideAnimation {
@@ -34,14 +36,16 @@ class UIControlView {
     static public var closeBackColor: UIColor!
     static public var closeTintColor: UIColor!
     
-    // View delegate
+    // Delegate
     static var delegate: UIControlViewDelegate?
     
-    // View queue
+    // Queue
     static private var queue = [UIControlViewQueue]()
     
-    //MARK: - present
-    static func show(_ vc: UIViewController, actions: [UIControlViewAction], config: UIControlViewConfig) {
+    //MARK: - Show
+    static func show(_ vc: UIViewController, actions: [UIControlViewAction]) {
+        let config = UIControlViewConfig(cornerRadius: cornerRadius, viewWidth: viewWidth, viewHeight: viewHeight, showHideIndicator: showHideIndicator)
+        
         let screen = UIScreen.main.bounds
         let topPadding = CGFloat((UIApplication.shared.keyWindow?.safeAreaInsets.top)!)
         let bottomPadding = CGFloat((UIApplication.shared.keyWindow?.safeAreaInsets.bottom)!)
@@ -74,32 +78,31 @@ class UIControlView {
                     return 6
                 }
             }
-                
+            
             let customConfig = UIControlViewConfig(viewWidth: config.viewWidth+wPlus,
                                                        viewHeight: config.viewHeight,
                                                        showHideIndicator: config.showHideIndicator)
-                
+            
             let lastID = [queue.last!.uuid![0]+1, queue.last!.uuid![1]+1, queue.last!.uuid![2]+1]
             uuid = lastID
             queue.append(UIControlViewQueue(uuid: lastID, config: customConfig, actions: actions))
         }
-            
+        
         let actionView = UIControlViewItem.init(items: actions,
                                                 viewSize: CGSize(width: queue.last!.config.viewWidth, height: queue.last!.config.viewHeight),
                                                 config: queue.last!.config, uuid: uuid)
-            
+        
         vc.view.addSubview(actionView)
-            
+        
         let pan = UIPanGestureRecognizer(target: self, action: #selector(UIControlViewDrag(_:)))
         pan.maximumNumberOfTouches = 1
         pan.cancelsTouchesInView = true
         actionView.addGestureRecognizer(pan)
-            
+        
         currentVC = vc
         currentConfig = config
-            
+        
         var yPlus: CGFloat {
-            print(queue.count)
             if queue.count == 1 {
                 return 0
             } else if queue.count > 2 {
@@ -107,31 +110,31 @@ class UIControlView {
             } else {
                 return 4
             }
-         }
-            
-         var viewY: CGFloat {
-             if bottomPadding.isZero {
-                 return screen.height-settings.actionViewSize.height+bottomPadding+topPadding-yPlus
-             } else {
-                 return screen.height-settings.actionViewSize.height-bottomPadding+topPadding-yPlus
-             }
-         }
-            
-         actionView.center.x = UIApplication.shared.keyWindow!.frame.midX
-            
-         if showWithSlideAnimation {
-             actionView.layer.position.y = screen.height + bottomPadding + topPadding
-                
-             UIView.animate(withDuration: animationDuration, animations: {
-                 actionView.layer.position.y = viewY
-             })
-         } else {
-             actionView.alpha = 0
-             actionView.layer.position.y = viewY
-             UIView.animate(withDuration: animationDuration, animations: {
-                 actionView.alpha = 1
-             })
-         }
+        }
+        
+        var viewY: CGFloat {
+            if bottomPadding.isZero {
+                return screen.height-config.viewHeight+topPadding-yPlus
+            } else {
+                return screen.height-config.viewHeight-bottomPadding+topPadding-yPlus
+            }
+        }
+        
+        actionView.center.x = UIApplication.shared.keyWindow!.frame.midX
+        
+        if showWithSlideAnimation {
+            actionView.layer.position.y = screen.height + bottomPadding + topPadding
+               
+            UIView.animate(withDuration: animationDuration, animations: {
+                actionView.layer.position.y = viewY
+            })
+        } else {
+            actionView.alpha = 0
+            actionView.layer.position.y = viewY
+            UIView.animate(withDuration: animationDuration, animations: {
+                actionView.alpha = 1
+            })
+        }
     }
     
     //MARK: - closeFirst
@@ -143,16 +146,14 @@ class UIControlView {
                 } else {
                     actionView.alpha = 0
                 }
-                print("closed")
             } else {
-                print("No actionView 1")
+                //print("No actionView 1")
             }
         }, completion: { (finished: Bool) in
             if let actionView = currentVC.view.viewWithTag(UIControlViewID.backViewID) {
                 actionView.removeFromSuperview()
-                print("removed")
             } else {
-                print("No actionView 2")
+                //print("No actionView 2")
             }
         })
         
@@ -170,16 +171,14 @@ class UIControlView {
                 } else {
                     actionView.alpha = 0
                 }
-                print("last closed")
             } else {
-                print("No actionView last 1")
+                //print("No actionView last 1")
             }
         }, completion: { (finished: Bool) in
             if let actionView = currentVC.view.viewWithTag(lastID) {
                 actionView.removeFromSuperview()
-                print("last removed")
             } else {
-                print("No actionView last 2")
+                //print("No actionView last 2")
             }
         })
         
@@ -206,16 +205,14 @@ class UIControlView {
                     } else {
                         actionView.alpha = 0
                     }
-                    print("closed")
                 } else {
-                    print("No actionView 1")
+                    //print("No actionView 1")
                 }
             }, completion: { (finished: Bool) in
                 if let actionView = currentVC.view.viewWithTag(reversedID[index]) {
                     actionView.removeFromSuperview()
-                    print("removed")
                 } else {
-                    print("No actionView 2")
+                    //print("No actionView 2")
                 }
             })
         }
