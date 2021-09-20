@@ -76,10 +76,8 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
             let templateImage = cell.iconView.image?.withRenderingMode(.alwaysTemplate)
             let alphaColor = color.withAlphaComponent(0.55)
             let auto = UIControlViewHelper.detectTheme(dark: .systemGray, light: alphaColor, any: .systemGray)
-            let tint = UIControlViewHelper.detectBy(ThemeDetect.getThemeType(),
-                                                    dark: .systemGray, light: alphaColor, any: .systemGray,
-                                                    auto: auto)
-            cell.titleLabel.textColor = tint
+            
+            cell.titleLabel.textColor = auto
             
             cell.iconView.image = templateImage
             cell.iconView.tintColor = color
@@ -96,10 +94,8 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
             let templateImage = cell.iconView.image?.withRenderingMode(.alwaysTemplate)
             let alphaColor = color.withAlphaComponent(0.55)
             let auto = UIControlViewHelper.detectTheme(dark: .systemGray, light: alphaColor, any: .systemGray)
-            let tint = UIControlViewHelper.detectBy(ThemeDetect.getThemeType(),
-                                                    dark: .systemGray, light: alphaColor, any: .systemGray,
-                                                    auto: auto)
-            cell.titleLabel.textColor = tint
+           
+            cell.titleLabel.textColor = auto
             
             cell.iconView.image = templateImage
             cell.iconView.tintColor = color
@@ -111,16 +107,12 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         case .custom(let color):
             let alphaColor = color.withAlphaComponent(0.05)
             let auto = UIControlViewHelper.detectTheme(dark: .clear, light: alphaColor, any: .clear)
-            let back = UIControlViewHelper.detectBy(ThemeDetect.getThemeType(),
-                                                    dark: .clear, light: alphaColor, any: .clear,
-                                                    auto: auto)
-            cell.backgroundColor = back
+            
+            cell.backgroundColor = auto
         case .standard:
             let auto = UIControlViewHelper.detectTheme(dark: .clear, light: .darkGray, any: .clear)
-            let back = UIControlViewHelper.detectBy(ThemeDetect.getThemeType(),
-                                                    dark: .clear, light: .darkGray, any: .clear,
-                                                    auto: auto)
-            cell.backgroundColor = back.withAlphaComponent(0.05)
+            
+            cell.backgroundColor = auto.withAlphaComponent(0.05)
         case .customHEX(let hex):
             let color = UIControlViewHelper.HexToUIColor(hex)
             cell.backgroundColor = color.withAlphaComponent(0.05)
