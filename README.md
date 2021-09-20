@@ -9,6 +9,13 @@
 
 Bottom view with multiple actions
 
+## Navigate
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Delegate](#delegate)
+
 ## Features
 
 - Highly customizable
@@ -53,6 +60,9 @@ Bottom view with multiple actions
 
 - Swipe to hide or press button
 - Support dark/light theme
+
+## Installation
+Put `Sources` folder in your Xcode project. Make sure to enable Copy items if needed.
 
 ## Usage
 
