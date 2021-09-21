@@ -46,7 +46,7 @@ Bottom view with multiple actions
    - standard
    - custom(_ color: UIColor)
    - customHEX(_ hex: String)
-   - coloredImage(_ tintColor: UIColor)
+   - coloredImage(_ tintColor: UIColor) // If a multi-color image is used, only the text color changes
    ```
     
    Background color
