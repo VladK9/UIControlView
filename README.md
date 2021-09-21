@@ -37,6 +37,10 @@ Bottom view with multiple actions
    - TitleWithIcon(_ title: String, _ icon: UIImage)
    ```
    
+   <p float="left">
+   <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Item configs.png" width="350">
+   </p>
+   
    Tint color
    ```swift
    - standard
