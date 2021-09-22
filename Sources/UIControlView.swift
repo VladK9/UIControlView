@@ -131,6 +131,7 @@ class UIControlView {
         } else {
             actionView.alpha = 0
             actionView.layer.position.y = viewY
+            
             UIView.animate(withDuration: animationDuration, animations: {
                 actionView.alpha = 1
             })
@@ -146,14 +147,10 @@ class UIControlView {
                 } else {
                     actionView.alpha = 0
                 }
-            } else {
-                //print("No actionView 1")
             }
         }, completion: { (finished: Bool) in
             if let actionView = currentVC.view.viewWithTag(UIControlViewID.backViewID) {
                 actionView.removeFromSuperview()
-            } else {
-                //print("No actionView 2")
             }
         })
         
@@ -171,14 +168,10 @@ class UIControlView {
                 } else {
                     actionView.alpha = 0
                 }
-            } else {
-                //print("No actionView last 1")
             }
         }, completion: { (finished: Bool) in
             if let actionView = currentVC.view.viewWithTag(lastID) {
                 actionView.removeFromSuperview()
-            } else {
-                //print("No actionView last 2")
             }
         })
         
@@ -205,14 +198,10 @@ class UIControlView {
                     } else {
                         actionView.alpha = 0
                     }
-                } else {
-                    //print("No actionView 1")
                 }
             }, completion: { (finished: Bool) in
                 if let actionView = currentVC.view.viewWithTag(reversedID[index]) {
                     actionView.removeFromSuperview()
-                } else {
-                    //print("No actionView 2")
                 }
             })
         }
