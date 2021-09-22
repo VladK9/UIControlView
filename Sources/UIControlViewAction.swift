@@ -11,7 +11,7 @@ public enum itemTintColor {
 public enum itemBackColor {
     case standard
     case clear
-    case custom(_ color: UIColor) // alpha: CGFloat = 0.05
+    case custom(_ color: UIColor)
     case customHEX(_ hex: String)
 }
 
