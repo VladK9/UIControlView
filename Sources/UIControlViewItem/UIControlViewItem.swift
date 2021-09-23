@@ -165,7 +165,6 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
     
     //MARK: - layout cell size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         let actionViewWidth = actionViewSize.width
         let actionViewHeight = Double(actionViewSize.height)
         let count = itemsData.count
@@ -227,9 +226,7 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
     override func layoutSubviews() {
         super.layoutSubviews()
         if itemsConfig.showHideIndicator {
-            hideIndicator.center.x = frame.width/2-20
-            hideIndicator.frame.origin.y = 3
-            hideIndicator.frame.size = CGSize(width: 40, height: 4)
+            hideIndicator.frame = CGRect(x: frame.width/2-20, y: 3, width: 40, height: 4)
             
             frame.size = CGSize(width: actionViewSize.width, height: actionViewSize.height+7)
             itemsView.frame.size = actionViewSize
