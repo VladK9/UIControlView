@@ -49,10 +49,50 @@ class UIControlItemsCell: UICollectionViewCell {
             if self.isHighlighted {
                 UIView.animate(withDuration: 0.27, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1.0, options: [.curveEaseOut, .beginFromCurrentState], animations: {
                     self.transform = self.transform.scaledBy(x: 0.95, y: 0.95) //0.93
+                    
+                    switch self.itemBackColor {
+                    case .clear:
+                        self.backgroundColor = .clear
+                    case .custom(let backColor):
+                        let auto = UIControlViewHelper.detectTheme(dark: UIColor.white.withAlphaComponent(0.05),
+                                                                   light: backColor.withAlphaComponent(0.05),
+                                                                   any: UIColor.black.withAlphaComponent(0.05))
+                        
+                        self.backgroundColor = auto
+                    case .standard:
+                        let auto = UIControlViewHelper.detectTheme(dark: UIColor.white.withAlphaComponent(0.05),
+                                                                   light: UIColor.black.withAlphaComponent(0.05),
+                                                                   any: UIColor.black.withAlphaComponent(0.05))
+                        
+                        self.backgroundColor = auto
+                    case .customHEX(let hex):
+                        let color = UIControlViewHelper.HexToUIColor(hex)
+                        self.backgroundColor = color.withAlphaComponent(0.05)
+                    case .none:
+                        self.backgroundColor = .clear
+                    }
                 })
             } else {
                 UIView.animate(withDuration: 0.27, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1.0, options: [.curveEaseOut, .beginFromCurrentState], animations: {
                     self.transform = .identity
+                    
+                    switch self.itemBackColor {
+                    case .clear:
+                        self.backgroundColor = .clear
+                    case .custom(let backColor):
+                        let auto = UIControlViewHelper.detectTheme(dark: .clear,
+                                                                   light: backColor.withAlphaComponent(0.05),
+                                                                   any: .clear)
+                        
+                        self.backgroundColor = auto
+                    case .standard:
+                        self.backgroundColor = UIColor.darkGray.withAlphaComponent(0.05)
+                    case .customHEX(let hex):
+                        let color = UIControlViewHelper.HexToUIColor(hex)
+                        self.backgroundColor = color.withAlphaComponent(0.05)
+                    case .none:
+                        self.backgroundColor = .clear
+                    }
                 })
             }
         }
