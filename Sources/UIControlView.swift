@@ -112,11 +112,19 @@ class UIControlView {
             }
         }
         
+        var yInd: CGFloat {
+            if showHideIndicator {
+                return 3.5
+            } else {
+                return 0
+            }
+        }
+        
         var viewY: CGFloat {
             if bottomPadding.isZero {
-                return screen.height-config.viewHeight+topPadding-yPlus
+                return screen.height-config.viewHeight-yInd+topPadding-yPlus
             } else {
-                return screen.height-config.viewHeight-bottomPadding+topPadding-yPlus
+                return screen.height-config.viewHeight-yInd-bottomPadding+topPadding-yPlus
             }
         }
         
