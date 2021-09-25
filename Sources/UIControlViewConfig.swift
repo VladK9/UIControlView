@@ -7,9 +7,6 @@ public struct UIControlViewConfig {
     // UIControlView corner radius
     public var cornerRadius: CGFloat!
     
-    // Maximum items in UIControlView
-    public var maxItems: Int!
-    
     // UIControlView size
     public var viewWidth: CGFloat!
     public var viewHeight: CGFloat!
@@ -21,7 +18,6 @@ public struct UIControlViewConfig {
     public var itemsToScroll: Int!
     
     public init(cornerRadius: CGFloat = 9,
-                maxItems: Int = 8,
                 viewWidth: CGFloat = UIScreen.main.bounds.width-26,
                 viewHeight: CGFloat = 80,
                 showHideIndicator: Bool = false,
