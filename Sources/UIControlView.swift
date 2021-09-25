@@ -10,8 +10,24 @@ class UIControlView {
     
     //MARK: - Config
     // View size
-    static public var viewWidth: CGFloat = UIScreen.main.bounds.width-26
-    static public var viewHeight: CGFloat = 80
+    static public var viewWidth: CGFloat = UIScreen.main.bounds.width-26 {
+        didSet {
+            if viewWidth >= UIScreen.main.bounds.width {
+                viewWidth = UIScreen.main.bounds.width-26
+            }
+        }
+    }
+    
+    static public var viewHeight: CGFloat = 80 {
+        didSet {
+            if viewHeight > 120 {
+                viewHeight = 120
+            }
+        }
+    }
+    
+    // Max items to start scroll
+    static public var itemsToScroll: Int = 5
     
     // Corner radius
     static public var cornerRadius: CGFloat = 9
@@ -80,8 +96,9 @@ class UIControlView {
             }
             
             let customConfig = UIControlViewConfig(viewWidth: config.viewWidth+wPlus,
-                                                       viewHeight: config.viewHeight,
-                                                       showHideIndicator: config.showHideIndicator)
+                                                   viewHeight: config.viewHeight,
+                                                   showHideIndicator: config.showHideIndicator,
+                                                   itemsToScroll: config.itemsToScroll)
             
             let lastID = [queue.last!.uuid![0]+1, queue.last!.uuid![1]+1, queue.last!.uuid![2]+1]
             uuid = lastID
@@ -120,11 +137,21 @@ class UIControlView {
             }
         }
         
+        var customH: CGFloat {
+            if config.viewHeight > 100 {
+                return config.viewHeight/1.2
+            } else if config.viewHeight > 80 {
+                return config.viewHeight/1.1
+            }
+            
+            return config.viewHeight
+        }
+        
         var viewY: CGFloat {
             if bottomPadding.isZero {
-                return screen.height-config.viewHeight-yInd+topPadding-yPlus
+                return screen.height-customH-yInd+topPadding-yPlus
             } else {
-                return screen.height-config.viewHeight-yInd-bottomPadding+topPadding-yPlus
+                return screen.height-customH-yInd-bottomPadding+topPadding-yPlus
             }
         }
         
