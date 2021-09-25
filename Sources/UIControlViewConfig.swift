@@ -17,23 +17,22 @@ public struct UIControlViewConfig {
     // Show hide indicator or not
     public var showHideIndicator: Bool!
     
-    // Enable sizeToFit
-    public var sizeToFit: Bool!
+    // Max items to start scroll
+    public var itemsToScroll: Int!
     
     public init(cornerRadius: CGFloat = 9,
                 maxItems: Int = 8,
                 viewWidth: CGFloat = UIScreen.main.bounds.width-26,
                 viewHeight: CGFloat = 80,
                 showHideIndicator: Bool = false,
-                sizeToFit: Bool = false) {
+                itemsToScroll: Int = 5) {
         self.cornerRadius = cornerRadius
-        self.maxItems = maxItems
         
         self.viewWidth = viewWidth
         self.viewHeight = viewHeight
         
         self.showHideIndicator = showHideIndicator
-        self.sizeToFit = sizeToFit
+        self.itemsToScroll = itemsToScroll
     }
 }
 
