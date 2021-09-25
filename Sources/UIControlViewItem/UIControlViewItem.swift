@@ -120,10 +120,11 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         
         let insetsSpace = (count+1) * Int(insets.left)
         let customInset = Double(insetsSpace)/Double(count)
+        let itemsToScroll = itemsConfig.itemsToScroll!
         
         var cellSz: CGSize {
-            if count >= 5 { //more then 5 items or 5 items
-                return CGSize(width: (Double(actionViewWidth)/Double(5))-4.8,
+            if count >= itemsToScroll { //more then 5 items or 5 items
+                return CGSize(width: (Double(actionViewWidth)/Double(itemsToScroll))-4.8,
                               height: actionViewHeight-Double(insets.top*2))
             } else { //less then 5 items
                 return CGSize(width: ((Double(actionViewWidth)/Double(count))-customInset),
@@ -172,10 +173,11 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         
         let insetsSpace = (count+1) * Int(insets.left)
         let customInset = Double(insetsSpace)/Double(count)
+        let itemsToScroll = itemsConfig.itemsToScroll!
         
         var item: CGSize {
-            if count >= 5 { //more then 5 items or 5 items
-                return CGSize(width: (Double(actionViewWidth)/Double(5))-4.8,
+            if count >= itemsToScroll { //more then 5 items or 5 items
+                return CGSize(width: (Double(actionViewWidth)/Double(itemsToScroll))-4.8,
                               height: actionViewHeight-Double(insets.top*2))
             } else { //less then 5 items
                 return CGSize(width: ((Double(actionViewWidth)/Double(count))-customInset),
