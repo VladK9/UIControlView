@@ -114,8 +114,10 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
             
             cell.backgroundColor = auto.withAlphaComponent(0.05)
         case .customHEX(let hex):
-            let color = UIControlViewHelper.HexToUIColor(hex)
-            cell.backgroundColor = color.withAlphaComponent(0.05)
+            let color = UIControlViewHelper.HexToUIColor(hex).withAlphaComponent(0.05)
+            let auto = UIControlViewHelper.detectTheme(dark: .clear, light: color, any: .clear)
+            
+            cell.backgroundColor = auto
         }
         
         let insetsSpace = (count+1) * Int(insets.left)
@@ -123,10 +125,10 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         let itemsToScroll = itemsConfig.itemsToScroll!
         
         var cellSz: CGSize {
-            if count >= itemsToScroll { //more then 5 items or 5 items
+            if count >= itemsToScroll {
                 return CGSize(width: (Double(actionViewWidth)/Double(itemsToScroll))-4.8,
                               height: actionViewHeight-Double(insets.top*2))
-            } else { //less then 5 items
+            } else {
                 return CGSize(width: ((Double(actionViewWidth)/Double(count))-customInset),
                               height: actionViewHeight-Double(insets.top*2))
             }
@@ -134,18 +136,24 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         
         switch item.item {
         case .onlyTitle(_):
-            cell.titleLabel.frame = CGRect(x: 4, y: 20,
-                                           width: cellSz.width-8, height: cell.frame.height-40)
+            cell.titleLabel.frame = CGRect(x: 4, y: 0,
+                                           width: cellSz.width-8, height: cell.frame.height/1.7)
+            cell.titleLabel.center.y = cell.frame.height/2 //cell.center.y
+            
             cell.titleLabel.isHidden = false
             cell.iconView.isHidden = true
         case .onlyIcon(_):
-            cell.iconView.frame = CGRect(x: 0, y: 18,
-                                         width: cellSz.width, height: cell.frame.height-36)
+            cell.iconView.frame = CGRect(x: 4, y: 0,
+                                         width: cellSz.width-8, height: cell.frame.height/1.7)
+            cell.iconView.center.y = cell.frame.height/2
+            
             cell.iconView.isHidden = false
             cell.titleLabel.isHidden = true
         case .TitleWithIcon(_, _):
-            cell.iconView.frame = CGRect(x: 0, y: 13, width: cellSz.width, height: cell.frame.height/2.6)
-            cell.titleLabel.frame = CGRect(x: 4, y: cell.center.y+5, width: cellSz.width-8, height: 15)
+            cell.iconView.frame = CGRect(x: 4, y: cell.frame.height/2-cell.frame.height/3.5,
+                                         width: cellSz.width-8, height: cell.frame.height/2.6)
+            cell.titleLabel.frame = CGRect(x: 4, y: cell.iconView.frame.origin.y+cell.iconView.frame.height+1,
+                                           width: cellSz.width-8, height: 15)
             
             cell.titleLabel.isHidden = false
             cell.iconView.isHidden = false
@@ -176,10 +184,10 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         let itemsToScroll = itemsConfig.itemsToScroll!
         
         var item: CGSize {
-            if count >= itemsToScroll { //more then 5 items or 5 items
+            if count >= itemsToScroll {
                 return CGSize(width: (Double(actionViewWidth)/Double(itemsToScroll))-4.8,
                               height: actionViewHeight-Double(insets.top*2))
-            } else { //less then 5 items
+            } else {
                 return CGSize(width: ((Double(actionViewWidth)/Double(count))-customInset),
                               height: actionViewHeight-Double(insets.top*2))
             }
