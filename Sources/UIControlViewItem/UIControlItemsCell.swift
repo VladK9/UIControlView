@@ -66,8 +66,12 @@ class UIControlItemsCell: UICollectionViewCell {
                         
                         self.backgroundColor = auto
                     case .customHEX(let hex):
-                        let color = UIControlViewHelper.HexToUIColor(hex)
-                        self.backgroundColor = color.withAlphaComponent(0.05)
+                        let color = UIControlViewHelper.HexToUIColor(hex).withAlphaComponent(0.05)
+                        let auto = UIControlViewHelper.detectTheme(dark: UIColor.white.withAlphaComponent(0.05),
+                                                                   light: color,
+                                                                   any: UIColor.black.withAlphaComponent(0.05))
+                        
+                        self.backgroundColor = auto
                     case .none:
                         self.backgroundColor = .clear
                     }
@@ -80,16 +84,16 @@ class UIControlItemsCell: UICollectionViewCell {
                     case .clear:
                         self.backgroundColor = .clear
                     case .custom(let backColor):
-                        let auto = UIControlViewHelper.detectTheme(dark: .clear,
-                                                                   light: backColor.withAlphaComponent(0.05),
-                                                                   any: .clear)
+                        let auto = UIControlViewHelper.detectTheme(dark: .clear, light: backColor.withAlphaComponent(0.05), any: .clear)
                         
                         self.backgroundColor = auto
                     case .standard:
                         self.backgroundColor = UIColor.darkGray.withAlphaComponent(0.05)
                     case .customHEX(let hex):
-                        let color = UIControlViewHelper.HexToUIColor(hex)
-                        self.backgroundColor = color.withAlphaComponent(0.05)
+                        let color = UIControlViewHelper.HexToUIColor(hex).withAlphaComponent(0.05)
+                        let auto = UIControlViewHelper.detectTheme(dark: .clear, light: color, any: .clear)
+                        
+                        self.backgroundColor = auto
                     case .none:
                         self.backgroundColor = .clear
                     }
