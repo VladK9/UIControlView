@@ -23,6 +23,10 @@ class UIControlView {
             if viewHeight > 120 {
                 viewHeight = 120
             }
+            
+            if viewHeight < 80 {
+                viewHeight = 80
+            }
         }
     }
     
