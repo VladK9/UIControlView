@@ -60,7 +60,7 @@ class UIControlView {
     
     //MARK: - Show
     static func show(_ vc: UIViewController, actions: [UIControlViewAction]) {
-        let config = UIControlViewConfig(cornerRadius: cornerRadius, viewWidth: viewWidth, viewHeight: viewHeight, showHideIndicator: showHideIndicator)
+        let config = UIControlViewConfig(cornerRadius: cornerRadius, viewWidth: viewWidth, viewHeight: viewHeight, showHideIndicator: showHideIndicator, itemsToScroll: itemsToScroll)
         
         let screen = UIScreen.main.bounds
         let topPadding = CGFloat((UIApplication.shared.keyWindow?.safeAreaInsets.top)!)
