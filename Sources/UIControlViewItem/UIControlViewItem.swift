@@ -1,5 +1,4 @@
 import UIKit
-import Foundation
 
 class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -8,9 +7,7 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
     var itemsConfig = UIControlViewConfig()
     
     let cellSpacing: CGFloat = 4
-    var cellInsets: UIEdgeInsets {
-        return UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
-    }
+    let cellInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
     
     let hideIndicator: UIView = {
         let hideView = UIView()
@@ -50,10 +47,6 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! UIControlItemsCell
         
         let item = itemsData[indexPath.item]
-        let count = itemsData.count
-        let insets = cellInsets
-        let actionViewWidth = actionViewSize.width
-        let actionViewHeight = Double(actionViewSize.height)
         
         cell.item = item
         
@@ -86,6 +79,7 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
             
             cell.iconView.image = templateImage
             cell.iconView.tintColor = UIControlViewColors.revColor!
+            
             cell.titleLabel.textColor = .systemGray
         case .coloredImage(let tintColor):
             cell.titleLabel.textColor = tintColor.withAlphaComponent(0.55)
@@ -105,14 +99,13 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         case .clear:
             cell.backgroundColor = .clear
         case .custom(let color):
-            let alphaColor = color.withAlphaComponent(0.05)
-            let auto = UIControlViewHelper.detectTheme(dark: .clear, light: alphaColor, any: .clear)
+            let auto = UIControlViewHelper.detectTheme(dark: .clear, light: color.withAlphaComponent(0.05), any: .clear)
             
             cell.backgroundColor = auto
         case .standard:
-            let auto = UIControlViewHelper.detectTheme(dark: .clear, light: .darkGray, any: .clear)
+            let auto = UIControlViewHelper.detectTheme(dark: .clear, light: .darkGray.withAlphaComponent(0.05), any: .clear)
             
-            cell.backgroundColor = auto.withAlphaComponent(0.05)
+            cell.backgroundColor = auto
         case .customHEX(let hex):
             let color = UIControlViewHelper.HexToUIColor(hex).withAlphaComponent(0.05)
             let auto = UIControlViewHelper.detectTheme(dark: .clear, light: color, any: .clear)
@@ -120,40 +113,22 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
             cell.backgroundColor = auto
         }
         
-        let insetsSpace = (count+1) * Int(insets.left)
-        let customInset = Double(insetsSpace)/Double(count)
-        let itemsToScroll = itemsConfig.itemsToScroll!
-        
-        var cellSz: CGSize {
-            if count >= itemsToScroll {
-                return CGSize(width: (Double(actionViewWidth)/Double(itemsToScroll))-4.8,
-                              height: actionViewHeight-Double(insets.top*2))
-            } else {
-                return CGSize(width: ((Double(actionViewWidth)/Double(count))-customInset),
-                              height: actionViewHeight-Double(insets.top*2))
-            }
-        }
-        
         switch item.item {
         case .onlyTitle(_):
-            cell.titleLabel.frame = CGRect(x: 4, y: 0,
-                                           width: cellSz.width-8, height: cell.frame.height/1.7)
-            cell.titleLabel.center.y = cell.frame.height/2 //cell.center.y
+            cell.titleLabel.frame = CGRect(x: 4, y: 0, width: cell.frame.width-8, height: cell.frame.height/1.7)
+            cell.titleLabel.center.y = cell.frame.height/2
             
             cell.titleLabel.isHidden = false
             cell.iconView.isHidden = true
         case .onlyIcon(_):
-            cell.iconView.frame = CGRect(x: 4, y: 0,
-                                         width: cellSz.width-8, height: cell.frame.height/1.7)
+            cell.iconView.frame = CGRect(x: 4, y: 0, width: cell.frame.width-8, height: cell.frame.height/1.7)
             cell.iconView.center.y = cell.frame.height/2
             
             cell.iconView.isHidden = false
             cell.titleLabel.isHidden = true
         case .TitleWithIcon(_, _):
-            cell.iconView.frame = CGRect(x: 4, y: cell.frame.height/2-cell.frame.height/3.5,
-                                         width: cellSz.width-8, height: cell.frame.height/2.6)
-            cell.titleLabel.frame = CGRect(x: 4, y: cell.iconView.frame.origin.y+cell.iconView.frame.height+1,
-                                           width: cellSz.width-8, height: 15)
+            cell.iconView.frame = CGRect(x: 4, y: cell.frame.height/2-cell.frame.height/3.5, width: cell.frame.width-8, height: cell.frame.height/2.6)
+            cell.titleLabel.frame = CGRect(x: 4, y: cell.iconView.frame.origin.y+cell.iconView.frame.height+1, width: cell.frame.width-8, height: 15)
             
             cell.titleLabel.isHidden = false
             cell.iconView.isHidden = false
@@ -185,11 +160,9 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         
         var item: CGSize {
             if count >= itemsToScroll {
-                return CGSize(width: (Double(actionViewWidth)/Double(itemsToScroll))-4.8,
-                              height: actionViewHeight-Double(insets.top*2))
+                return CGSize(width: (Double(actionViewWidth)/Double(itemsToScroll))-4.8, height: actionViewHeight-Double(insets.top*2))
             } else {
-                return CGSize(width: ((Double(actionViewWidth)/Double(count))-customInset),
-                              height: actionViewHeight-Double(insets.top*2))
+                return CGSize(width: ((Double(actionViewWidth)/Double(count))-customInset), height: actionViewHeight-Double(insets.top*2))
             }
         }
         
