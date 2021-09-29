@@ -1,5 +1,4 @@
 import UIKit
-import Foundation
 
 class UIControlItemsCell: UICollectionViewCell {
     
@@ -88,7 +87,9 @@ class UIControlItemsCell: UICollectionViewCell {
                         
                         self.backgroundColor = auto
                     case .standard:
-                        self.backgroundColor = UIColor.darkGray.withAlphaComponent(0.05)
+                        let auto = UIControlViewHelper.detectTheme(dark: .clear, light: .darkGray.withAlphaComponent(0.05), any: .clear)
+                        
+                        self.backgroundColor = auto
                     case .customHEX(let hex):
                         let color = UIControlViewHelper.HexToUIColor(hex).withAlphaComponent(0.05)
                         let auto = UIControlViewHelper.detectTheme(dark: .clear, light: color, any: .clear)
