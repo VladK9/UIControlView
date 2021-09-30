@@ -1,5 +1,4 @@
 import UIKit
-import Foundation
 
 // MARK: - UIControlViewConfig
 public struct UIControlViewConfig {
@@ -43,22 +42,6 @@ public struct UIControlViewQueue {
         self.uuid = uuid
         self.config = config
         self.actions = actions
-    }
-}
-
-// MARK: - UIControlViewIDQueue
-public struct UIControlViewIDQueue {
-    
-    public struct uuidQueue {
-        var backView: Int!
-        var itemsView: Int!
-        var hideIndicator: Int!
-    }
-    
-    public var uuid: [uuidQueue]!
-    
-    public init(uuid: [uuidQueue]) {
-        self.uuid = uuid
     }
 }
 
