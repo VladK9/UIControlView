@@ -1,8 +1,6 @@
 
 ### About
 
-
-
 <p align="center">
   <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Banner.png">
 </p>
@@ -75,9 +73,9 @@ let view = UIControlView.self
 let actions: [UIControlViewAction] = [
     .init(item: .TitleWithIcon("Item 1", UIImage(systemName: "highlighter")!), tintColor: .customHEX("890596"), backColor: .custom(.purple), handler: { _ in
     }),
-    .init(item: .TitleWithIcon("Item 2", UIImage(systemName: "folder")!), tintColor: .customHEX("#0C5AA9"), backColor: .custom(.blue), handler: { _ in
+    .init(item: .onlyTitle("Item 2"), tintColor: .customHEX("#0C5AA9"), backColor: .custom(.blue), handler: { _ in
     }),
-    .init(item: .TitleWithIcon("Item 3", UIImage(systemName: "trash")!), tintColor: .custom(.red), backColor: .custom(.red), handler: { _ in
+    .init(item: .onlyIcon(UIImage(systemName: "trash")!), tintColor: .custom(.red), backColor: .custom(.red), handler: { _ in
     })
 ]
       
@@ -92,7 +90,7 @@ view.show(self, actions: actions)
 
 ## Delegate
 
-To get `hide method` or `order` of view, set the delegate with protocol `UIControlViewDelegate`:
+To get `hide method` or `order`, set the delegate with protocol `UIControlViewDelegate`:
 
 ```swift
 func didHideView(_ method: HideMethod, _ order: HideOrder) {
