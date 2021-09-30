@@ -1,5 +1,4 @@
 import UIKit
-import Foundation
 
 public enum HideMethod {
     case isSwipe
@@ -24,4 +23,5 @@ public protocol UIControlViewDelegate: AnyObject {
 public extension UIControlViewDelegate {
     
     func didHideView(_ method: HideMethod, order: HideOrder) {}
+    
 }
