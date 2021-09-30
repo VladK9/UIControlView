@@ -1,5 +1,4 @@
 import UIKit
-import Foundation
 
 public enum itemTintColor {
     case standard
@@ -13,16 +12,6 @@ public enum itemBackColor {
     case clear
     case custom(_ color: UIColor)
     case customHEX(_ hex: String)
-}
-
-public enum selectedImage {
-    case singleImage(_ image: UIImage)
-    case multiImage(_ selected: UIImage, _ unselected: UIImage)
-}
-
-public enum selectedTitle {
-    case singleTitle(_ title: String)
-    case multiTitle(_ selected: String, _ unselected: String)
 }
 
 public enum itemSetup {
