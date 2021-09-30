@@ -159,7 +159,7 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         let itemsToScroll = itemsConfig.itemsToScroll!
         
         var item: CGSize {
-            if count >= itemsToScroll {
+            if count > itemsToScroll {
                 return CGSize(width: (Double(actionViewWidth)/Double(itemsToScroll))-4.8, height: actionViewHeight-Double(insets.top*2))
             } else {
                 return CGSize(width: ((Double(actionViewWidth)/Double(count))-customInset), height: actionViewHeight-Double(insets.top*2))
