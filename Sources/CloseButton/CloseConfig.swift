@@ -1,21 +1,32 @@
 import UIKit
-import Foundation
+
+public enum tintColor {
+    case color(_ color: UIColor)
+    case theme(light: UIColor, dark: UIColor, any: UIColor)
+}
+
+public enum backColor {
+    case color(_ color: UIColor)
+    case theme(light: UIColor, dark: UIColor, any: UIColor)
+}
 
 public struct CloseConfig {
     
     // Title
-    public var title: String?
+    public var title: String!
     
     // Action when tap CloseButton
     public var action: (() -> Void)?
     
     // Background color
-    public var backColor: UIColor!
+    public var backColor: backColor!
     
     // Text color
-    public var tintColor: UIColor!
+    public var tintColor: tintColor!
     
-    public init(title: String?, backColor: UIColor?, tintColor: UIColor?, action: (() -> Void)? = nil) {
+    public init(title: String = "Close",
+                backColor: backColor = .color(.black), tintColor: tintColor = .color(.white),
+                action: (() -> Void)? = nil) {
         self.title = title
         self.action = action
         self.backColor = backColor
