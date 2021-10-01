@@ -81,8 +81,8 @@ let actions: [UIControlViewAction] = [
       
 view.showHideIndicator = false
 view.closeTitle = "Close"
-view.closeBackColor = .black
-view.closeTintColor = .white
+view.closeBackColor = .theme(light: .black, dark: .white, any: .white) // or .color(.black)
+view.closeTintColor = .theme(light: .white, dark: .black, any: .black) // or .color(.white)
 view.showWithSlideAnimation = true
 view.delegate = self
 view.show(self, actions: actions)
