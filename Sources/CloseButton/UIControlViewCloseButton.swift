@@ -1,50 +1,34 @@
 import UIKit
-import Foundation
 
 class UIControlViewCloseButton: UIView {
     
     private var stackView: UIStackView = UIStackView()
     private var containerView: UIView = UIView()
     
+    var currentConfig = CloseConfig()
+    
     private var titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
+        label.textColor = .white
         label.font = UIControlViewHelper.roundedFont(fontSize: 15, weight: .semibold)
         return label
     }()
-    
-    private var title: String? {
-        didSet {
-            self.titleLabel.text = title
-        }
-    }
-    
-    open override var tintColor: UIColor! {
-        didSet {
-            self.titleLabel.textColor = tintColor
-        }
-    }
-    
-    open override var backgroundColor: UIColor! {
-        didSet {
-            self.containerView.backgroundColor = backgroundColor
-        }
-    }
     
     private var action: (() -> Void)? = nil
     
     fileprivate override init(frame: CGRect) {
         super.init(frame: frame)
-        initialize()
+        setupView()
     }
     
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
-        initialize()
+        setupView()
     }
     
     //MARK: - Add all subviews to the view
-    private func initialize() {
+    private func setupView() {
         stackView.spacing = 10
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
@@ -78,11 +62,32 @@ class UIControlViewCloseButton: UIView {
         action?()
     }
     
-    public func update(_ config: CloseConfig?) {
-        self.title = config?.title ?? "Close"
-        self.backgroundColor = config?.backColor
-        self.tintColor = config?.tintColor
-        self.action = config?.action
+    public func set(_ config: CloseConfig?) {
+        currentConfig = config!
+        
+        titleLabel.text = config!.title
+        
+        switch config?.tintColor {
+        case .color(let color):
+            titleLabel.textColor = color
+        case .theme(let light, let dark, let any):
+            let auto = UIControlViewHelper.detectTheme(dark: dark, light: light, any: any)
+            titleLabel.textColor = auto
+        case .none:
+            titleLabel.textColor = .white
+        }
+        
+        switch config?.backColor {
+        case .color(let color):
+            containerView.backgroundColor = color
+        case .theme(let light, let dark, let any):
+            let auto = UIControlViewHelper.detectTheme(dark: dark, light: light, any: any)
+            containerView.backgroundColor = auto
+        case .none:
+            containerView.backgroundColor = .black
+        }
+        
+        action = config?.action
     }
     
     override func layoutSubviews() {
@@ -91,6 +96,30 @@ class UIControlViewCloseButton: UIView {
         containerView.layer.masksToBounds = true
         
         layer.cornerRadius = min(frame.size.height, frame.size.width)/2
+    }
+    
+    //MARK: - theme
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        switch currentConfig.tintColor {
+        case .color(let color):
+            titleLabel.textColor = color
+        case .theme(let light, let dark, let any):
+            let auto = UIControlViewHelper.detectTheme(dark: dark, light: light, any: any)
+            titleLabel.textColor = auto
+        case .none:
+            titleLabel.textColor = .white
+        }
+        
+        switch currentConfig.backColor {
+        case .color(let color):
+            containerView.backgroundColor = color
+        case .theme(let light, let dark, let any):
+            let auto = UIControlViewHelper.detectTheme(dark: dark, light: light, any: any)
+            containerView.backgroundColor = auto
+        case .none:
+            containerView.backgroundColor = .black
+        }
     }
     
 }
@@ -119,7 +148,7 @@ public class CloseView {
         currentConfig.append(config)
         
         shared.CloseButton = UIControlViewCloseButton()
-        shared.CloseButton?.update(config)
+        shared.CloseButton?.set(config)
         
         guard let window = shared.keyWindow, let button = shared.CloseButton else { return }
         
@@ -150,7 +179,7 @@ public class CloseView {
         
         UIView.animate(withDuration: 0.25, animations: {
             button.alpha = 1
-        }, completion: nil)
+        })
     }
     
     //MARK: - playFadeOutAnimation
