@@ -1,5 +1,4 @@
 import UIKit
-import Foundation
 
 class UIControlView {
     
@@ -53,8 +52,8 @@ class UIControlView {
     
     // Close button config
     static public var closeTitle: String!
-    static public var closeBackColor: UIColor!
-    static public var closeTintColor: UIColor!
+    static public var closeBackColor: backColor!
+    static public var closeTintColor: tintColor!
     
     // Delegate
     static var delegate: UIControlViewDelegate?
