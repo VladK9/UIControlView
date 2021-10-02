@@ -67,16 +67,6 @@ class UIControlViewCloseButton: UIView {
         
         titleLabel.text = config!.title
         
-        switch config?.tintColor {
-        case .color(let color):
-            titleLabel.textColor = color
-        case .theme(let light, let dark, let any):
-            let auto = UIControlViewHelper.detectTheme(dark: dark, light: light, any: any)
-            titleLabel.textColor = auto
-        case .none:
-            titleLabel.textColor = .white
-        }
-        
         switch config?.backColor {
         case .color(let color):
             containerView.backgroundColor = color
@@ -85,6 +75,22 @@ class UIControlViewCloseButton: UIView {
             containerView.backgroundColor = auto
         case .none:
             containerView.backgroundColor = .black
+        }
+        
+        switch config?.tintColor {
+        case .color(let color):
+            titleLabel.textColor = color
+        case .theme(let light, let dark, let any):
+            let auto = UIControlViewHelper.detectTheme(dark: dark, light: light, any: any)
+            titleLabel.textColor = auto
+        case .auto:
+            if containerView.backgroundColor!.isLight {
+                titleLabel.textColor = .black
+            } else {
+                titleLabel.textColor = .white
+            }
+        case .none:
+            titleLabel.textColor = .white
         }
         
         action = config?.action
@@ -101,16 +107,6 @@ class UIControlViewCloseButton: UIView {
     //MARK: - theme
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        switch currentConfig.tintColor {
-        case .color(let color):
-            titleLabel.textColor = color
-        case .theme(let light, let dark, let any):
-            let auto = UIControlViewHelper.detectTheme(dark: dark, light: light, any: any)
-            titleLabel.textColor = auto
-        case .none:
-            titleLabel.textColor = .white
-        }
-        
         switch currentConfig.backColor {
         case .color(let color):
             containerView.backgroundColor = color
@@ -120,6 +116,22 @@ class UIControlViewCloseButton: UIView {
         case .none:
             containerView.backgroundColor = .black
         }
+        
+        switch currentConfig.tintColor {
+        case .color(let color):
+            titleLabel.textColor = color
+        case .theme(let light, let dark, let any):
+            let auto = UIControlViewHelper.detectTheme(dark: dark, light: light, any: any)
+            titleLabel.textColor = auto
+        case .auto:
+            if containerView.backgroundColor!.isLight {
+                titleLabel.textColor = .black
+            } else {
+                titleLabel.textColor = .white
+            }
+        case .none:
+            titleLabel.textColor = .white
+        }
     }
     
 }
@@ -127,8 +139,6 @@ class UIControlViewCloseButton: UIView {
 public class CloseView {
     
     fileprivate var CloseButton: UIControlViewCloseButton? = nil
-    
-    static var currentConfig: [CloseConfig?] = []
     
     public static var shared = CloseView()
     
@@ -144,9 +154,7 @@ public class CloseView {
     }()
     
     //MARK: - Show
-    public static func show(_ config: CloseConfig?, forVC: UIViewController) {
-        currentConfig.append(config)
-        
+    public static func show(_ config: CloseConfig, forVC: UIViewController) {
         shared.CloseButton = UIControlViewCloseButton()
         shared.CloseButton?.set(config)
         
@@ -206,14 +214,10 @@ public class CloseView {
                 shared.CloseButton?.removeFromSuperview()
                 shared.CloseButton = nil
                 
-                if currentConfig.isEmpty {
-                    DispatchQueue.main.async {
-                        completion?()
-                    }
+                DispatchQueue.main.async {
+                    completion?()
                 }
             })
         }
-        
-        currentConfig.removeAll()
     }
 }
