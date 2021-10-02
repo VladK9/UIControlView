@@ -3,6 +3,7 @@ import UIKit
 public enum tintColor {
     case color(_ color: UIColor)
     case theme(light: UIColor, dark: UIColor, any: UIColor)
+    case auto
 }
 
 public enum backColor {
