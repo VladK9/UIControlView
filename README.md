@@ -5,7 +5,7 @@
   <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Banner.png">
 </p>
 
-Bottom view with multiple actions
+Bottom view with infinity actions
 
 ## Navigate
 
@@ -20,10 +20,24 @@ Bottom view with multiple actions
    - cornerRadius
    - view width/height
    - show/hide indicator
+   <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Without Indicator.jpg" width="310">
+   <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/With Indicator.jpg" width="310">
+   
    - show with slide/fade animation
+   <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Animation.GIF" width="350">
+   
    - close button title
    - close button background color
+   ```swift
+   .theme(light: .black, dark: .white, any: .white)
+   .color(.black)
+   ```
    - close button tint color
+   ```swift
+   .theme(light: .black, dark: .white, any: .white)
+   .color(.black)
+   .auto - Color depends on closeBackColor (dark or light)
+   ```
 
 
    ### Each item config
@@ -64,7 +78,7 @@ Bottom view with multiple actions
 - Support dark/light theme
 
 ## Installation
-Put `Sources` folder in your Xcode project. Make sure to enable Copy items if needed.
+Put `Sources` folder in your Xcode project. Make sure to enable `Copy items if needed`.
 
 ## Usage
 
@@ -82,7 +96,7 @@ let actions: [UIControlViewAction] = [
 view.showHideIndicator = false
 view.closeTitle = "Close"
 view.closeBackColor = .theme(light: .black, dark: .white, any: .white) // .color(.black)
-view.closeTintColor = .theme(light: .white, dark: .black, any: .black) // .color(.white) // .auto - Color depends on closeBackColor (dark or light)
+view.closeTintColor = .theme(light: .white, dark: .black, any: .black) // .color(.white) // .auto
 view.showWithSlideAnimation = true
 view.delegate = self
 view.show(self, actions: actions)
