@@ -13,7 +13,7 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         let hideView = UIView()
         hideView.backgroundColor = UIControlViewColors.revColor!.withAlphaComponent(0.15)
         hideView.isUserInteractionEnabled = false
-        hideView.layer.cornerRadius = 3
+        hideView.layer.cornerRadius = 2
         return hideView
     }()
     
@@ -26,7 +26,7 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         itemsView.isScrollEnabled = true
         itemsView.allowsMultipleSelection = false
         itemsView.showsHorizontalScrollIndicator = false
-        itemsView.accessibilityIdentifier = "UIControlAction_CollectionView_items"
+        itemsView.accessibilityIdentifier = "UIControlView_CollectionView_items"
         
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 0
@@ -35,7 +35,7 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         return itemsView
     }()
     
-    fileprivate let cellID = "UIControlAction_items"
+    fileprivate let cellID = "UIControlView_items"
     
     //MARK: - count
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -58,7 +58,6 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
         case .TitleWithIcon(let title, let icon):
             cell.titleLabel.text = title
             cell.iconView.image = icon
-        default: break
         }
         
         cell.itemTintColor = item.tintColor
@@ -132,7 +131,6 @@ class UIControlViewItem: UIView, UICollectionViewDelegate, UICollectionViewDataS
             
             cell.titleLabel.isHidden = false
             cell.iconView.isHidden = false
-        default: break
         }
         
         cell.layer.cornerRadius = itemsConfig.cornerRadius-2
