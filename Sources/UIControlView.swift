@@ -9,10 +9,10 @@ class UIControlView {
     
     //MARK: - Config
     // View size
-    static public var viewWidth: CGFloat = UIScreen.main.bounds.width-26 {
+    static public var viewWidth: CGFloat = UIScreen.main.bounds.width-30 {
         didSet {
             if viewWidth >= UIScreen.main.bounds.width {
-                viewWidth = UIScreen.main.bounds.width-26
+                viewWidth = UIScreen.main.bounds.width-30
             }
         }
     }
@@ -66,8 +66,8 @@ class UIControlView {
         let config = UIControlViewConfig(cornerRadius: cornerRadius, viewWidth: viewWidth, viewHeight: viewHeight, showHideIndicator: showHideIndicator, itemsToScroll: itemsToScroll)
         
         let screen = UIScreen.main.bounds
-        let topPadding = CGFloat((UIApplication.shared.keyWindow?.safeAreaInsets.top)!)
-        let bottomPadding = CGFloat((UIApplication.shared.keyWindow?.safeAreaInsets.bottom)!)
+        let topPadding = UIApplication.shared.windows.first { $0.isKeyWindow }!.safeAreaInsets.top
+        let bottomPadding = UIApplication.shared.windows.first { $0.isKeyWindow }!.safeAreaInsets.bottom
         
         let hide = CloseConfig(title: closeTitle, backColor: closeBackColor, tintColor: closeTintColor, action: ({
             UISelectionFeedbackGenerator().selectionChanged()
@@ -178,10 +178,12 @@ class UIControlView {
     
     //MARK: - closeFirst
     static private func closeFirst(slideAnimation: Bool = true) {
+        let topPadding = UIApplication.shared.windows.first { $0.isKeyWindow }!.safeAreaInsets.top
+        
         UIView.animate(withDuration: animationDuration, animations: {
             if let actionView = currentVC.view.viewWithTag(UIControlViewID.backViewID) {
                 if slideAnimation {
-                    actionView.layer.position.y = UIScreen.main.bounds.height
+                    actionView.layer.position.y = UIScreen.main.bounds.height + (topPadding*4)
                 } else {
                     actionView.alpha = 0
                 }
@@ -198,11 +200,13 @@ class UIControlView {
     
     //MARK: - closeLast
     static func closeLast(slideAnimation: Bool = true) {
+        let topPadding = UIApplication.shared.windows.first { $0.isKeyWindow }!.safeAreaInsets.top
         let lastID = queue.last!.uuid![0]
+        
         UIView.animate(withDuration: animationDuration, animations: {
             if let actionView = currentVC.view.viewWithTag(lastID) {
                 if showWithSlideAnimation {
-                    actionView.layer.position.y = UIScreen.main.bounds.height
+                    actionView.layer.position.y = UIScreen.main.bounds.height + (topPadding*4)
                 } else {
                     actionView.alpha = 0
                 }
@@ -227,12 +231,13 @@ class UIControlView {
         }
         
         let reversedID = Array(allID.reversed())
+        let topPadding = UIApplication.shared.windows.first { $0.isKeyWindow }!.safeAreaInsets.top
         
         for index in 0..<queue.count {
             UIView.animate(withDuration: animationDuration, animations: {
                 if let actionView = currentVC.view.viewWithTag(reversedID[index]) {
                     if showWithSlideAnimation {
-                        actionView.layer.position.y = UIScreen.main.bounds.height
+                        actionView.layer.position.y = UIScreen.main.bounds.height + (topPadding*4)
                     } else {
                         actionView.alpha = 0
                     }
@@ -257,14 +262,12 @@ class UIControlView {
     
     //MARK: - UIControlViewDrag
     @objc static private func UIControlViewDrag(_ sender: UIPanGestureRecognizer) {
-        let topPadding = CGFloat((UIApplication.shared.keyWindow?.safeAreaInsets.top)!)
-        let bottomPadding = CGFloat((UIApplication.shared.keyWindow?.safeAreaInsets.bottom)!)
+        let topPadding = UIApplication.shared.windows.first { $0.isKeyWindow }!.safeAreaInsets.top
+        let topPadding = UIApplication.shared.windows.first { $0.isKeyWindow }!.safeAreaInsets.bottom
         
-        let screen = UIScreen.main.bounds
-        let allScreen = topPadding + screen.height + bottomPadding
+        let allScreen = topPadding + UIScreen.main.bounds.height + bottomPadding
         
         let velocity = sender.velocity(in: sender.view)
-        let translation = sender.translation(in: sender.view)
         
         var dismissDragSize: CGFloat {
             if bottomPadding.isZero {
@@ -275,10 +278,8 @@ class UIControlView {
         }
         
         switch sender.state {
-        case .began:
-            print("began")
         case .changed:
-            panState = panChanged(current: panState, view: sender.view!, velocity: velocity, translation: translation)
+            panState = panChanged(current: panState, gesture: sender)
         case .ended, .cancelled:
             if ((sender.view!.frame.origin.y) >= dismissDragSize) || (velocity.y > 180) {
                 if queue.count > 1 {
@@ -306,7 +307,10 @@ class UIControlView {
     }
     
     // MARK: - panChanged()
-    static private func panChanged(current: PanState, view: UIView, velocity: CGPoint, translation: CGPoint) -> PanState {
+    static private func panChanged(current: PanState, gesture: UIPanGestureRecognizer) -> PanState {
+        let view = gesture.view!
+        let translation = gesture.translation(in: gesture.view)
+        
         let bounceOffset: CGFloat = 5
         let rubberBanding = true
         
@@ -324,7 +328,7 @@ class UIControlView {
         if !rubberBanding && translationAmount < 0 { translationAmount = 0 }
         
         view.transform = CGAffineTransform(translationX: 0, y: translationAmount)
-        
+         
         return state
     }
     
