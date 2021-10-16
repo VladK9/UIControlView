@@ -10,14 +10,14 @@ public struct UIControlViewConfig {
     public var viewWidth: CGFloat!
     public var viewHeight: CGFloat!
     
-    // Show hide indicator or not
+    // Show/hide indicator
     public var showHideIndicator: Bool!
     
     // Max items to start scroll
     public var itemsToScroll: Int!
     
     public init(cornerRadius: CGFloat = 9,
-                viewWidth: CGFloat = UIScreen.main.bounds.width-26,
+                viewWidth: CGFloat = UIScreen.main.bounds.width-30,
                 viewHeight: CGFloat = 80,
                 showHideIndicator: Bool = false,
                 itemsToScroll: Int = 5) {
@@ -29,6 +29,7 @@ public struct UIControlViewConfig {
         self.showHideIndicator = showHideIndicator
         self.itemsToScroll = itemsToScroll
     }
+    
 }
 
 // MARK: - UIControlViewQueue
@@ -43,6 +44,7 @@ public struct UIControlViewQueue {
         self.config = config
         self.actions = actions
     }
+    
 }
 
 // MARK: - UIControlViewID
@@ -54,6 +56,7 @@ class UIControlViewID {
     static let containerViewID = 200020002
     static let hideViewID = 300030003
     static let IDArray = [backViewID, containerViewID, hideViewID]
+    
 }
 
 class UIControlViewColors {
