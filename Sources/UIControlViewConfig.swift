@@ -1,5 +1,15 @@
 import UIKit
 
+public enum selectedColor {
+    case none
+    case selected(top: Int, bottom: Int)
+}
+
+public enum viewType {
+    case actions(_ actions: [UIControlViewAction])
+    case color(_ colors: [UIColor], selected: selectedColor = .none)
+}
+
 // MARK: - UIControlViewConfig
 public struct UIControlViewConfig {
     
