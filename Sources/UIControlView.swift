@@ -414,7 +414,6 @@ class UIControlView {
                 }
             }
             
-            //MARK: - -FIX
             var yInd: CGFloat {
                 switch type {
                 case .actions:
@@ -440,7 +439,6 @@ class UIControlView {
                 }
             }
             
-            //MARK: - -rewrite
             var customH: CGFloat {
                 let h = queue.last!.config.viewHeight!
                 if h > 100 {
