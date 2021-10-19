@@ -25,3 +25,19 @@ public extension UIControlViewDelegate {
     func didHideView(_ method: HideMethod, order: HideOrder) {}
     
 }
+
+//MARK: - UIControlViewColorDelegate
+public protocol UIControlViewColorDelegate: AnyObject {
+    
+    /**
+     UIControlViewColor: Called when pressed hide button or swiped last view.
+     */
+    func didSelectColor(_ color: UIColor)
+    
+}
+
+public extension UIControlViewDelegate {
+    
+    func didSelectColor(_ color: UIColor) {}
+    
+}
