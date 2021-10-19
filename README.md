@@ -82,6 +82,8 @@ Put `Sources` folder in your Xcode project. Make sure to enable `Copy items if n
 
 ## Usage
 
+## Actions
+
 ```swift
 let view = UIControlView.self
 let actions: [UIControlViewAction] = [
@@ -99,7 +101,23 @@ view.closeBackColor = .theme(light: .black, dark: .white, any: .white) // .color
 view.closeTintColor = .theme(light: .white, dark: .black, any: .black) // .color(.white) // .auto
 view.showWithSlideAnimation = true
 view.delegate = self
-view.show(self, actions: actions)
+view.show(self, type: .actions(actions))
+```
+
+## Color
+
+```swift
+let view = UIControlView.self
+let colors: [UIColor] = [.gray, .systemBlue, .brown, .systemTeal, .systemCyan, .systemPink, .systemRed, .systemMint]
+      
+view.showHideIndicator = false
+view.closeTitle = "Close"
+view.closeBackColor = .theme(light: .black, dark: .white, any: .white) // .color(.black)
+view.closeTintColor = .theme(light: .white, dark: .black, any: .black) // .color(.white) // .auto
+view.showWithSlideAnimation = true
+view.delegate = self
+view.colorDelegate = self
+view.show(self, type: .color(colors, selected: .none))
 ```
 
 ## Delegate
@@ -121,5 +139,13 @@ func didHideView(_ method: HideMethod, _ order: HideOrder) {
     } else if order == .isAllClosed {
         print("isAllClosed")
     }
+}
+```
+
+To get `selected color`, set the delegate with protocol `UIControlViewColorDelegate`:
+
+```swift
+func didSelectColor(_ color: UIColor) {
+    ... = color
 }
 ```
