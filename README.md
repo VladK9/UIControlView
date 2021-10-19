@@ -98,13 +98,15 @@ let actions: [UIControlViewAction] = [
 view.showHideIndicator = false
 view.closeTitle = "Close"
 view.closeBackColor = .theme(light: .black, dark: .white, any: .white) // .color(.black)
-view.closeTintColor = .theme(light: .white, dark: .black, any: .black) // .color(.white) // .auto
+view.closeTintColor = .auto
 view.showWithSlideAnimation = true
 view.delegate = self
 view.show(self, type: .actions(actions))
 ```
 
 ## Color
+
+<img src="https://github.com/VladK9/UIControlView/blob/main/Assets/ColorView.jpeg" width="330">
 
 ```swift
 let view = UIControlView.self
@@ -113,11 +115,11 @@ let colors: [UIColor] = [.gray, .systemBlue, .brown, .systemTeal, .systemCyan, .
 view.showHideIndicator = false
 view.closeTitle = "Close"
 view.closeBackColor = .theme(light: .black, dark: .white, any: .white) // .color(.black)
-view.closeTintColor = .theme(light: .white, dark: .black, any: .black) // .color(.white) // .auto
+view.closeTintColor = .auto
 view.showWithSlideAnimation = true
 view.delegate = self
 view.colorDelegate = self
-view.show(self, type: .color(colors, selected: .none))
+view.show(self, type: .color(colors, selected: .none)) // selected: .selected(top: Int, bottom: Int) - Selected item on start
 ```
 
 ## Delegate
