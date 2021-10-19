@@ -1,11 +1,12 @@
 import UIKit
+//import Foundation
 
-class UIControlViewCloseButton: UIView {
+class UIControlViewCloseView: UIView {
     
     private var stackView: UIStackView = UIStackView()
     private var containerView: UIView = UIView()
     
-    var currentConfig = CloseConfig()
+    var currentConfig = CloseConfig(action: { })
     
     private var titleLabel: UILabel = {
         let label = UILabel()
@@ -27,7 +28,7 @@ class UIControlViewCloseButton: UIView {
         setupView()
     }
     
-    //MARK: - Add all subviews to the view
+    //MARK: - setupView()
     private func setupView() {
         stackView.spacing = 10
         stackView.axis = .horizontal
@@ -58,10 +59,12 @@ class UIControlViewCloseButton: UIView {
         self.containerView.addGestureRecognizer(tapRecognizer)
     }
     
+    //MARK: - TapAction()
     @objc private func TapAction() {
         action?()
     }
     
+    //MARK: - set(_ config: CloseConfig?)
     public func set(_ config: CloseConfig?) {
         currentConfig = config!
         
@@ -96,6 +99,7 @@ class UIControlViewCloseButton: UIView {
         action = config?.action
     }
     
+    //MARK: - layoutSubviews()
     override func layoutSubviews() {
         super.layoutSubviews()
         containerView.layer.cornerRadius = min(frame.size.height, frame.size.width)/2
@@ -136,11 +140,11 @@ class UIControlViewCloseButton: UIView {
     
 }
 
-public class CloseView {
+public class CloseButton {
     
-    fileprivate var CloseButton: UIControlViewCloseButton? = nil
+    fileprivate var Button: UIControlViewCloseView? = nil
     
-    public static var shared = CloseView()
+    public static let shared = CloseButton()
     
     fileprivate let keyWindow: UIWindow? = {
         if #available(iOS 13.0, *) {
@@ -155,10 +159,10 @@ public class CloseView {
     
     //MARK: - Show
     public static func show(_ config: CloseConfig, forVC: UIViewController) {
-        shared.CloseButton = UIControlViewCloseButton()
-        shared.CloseButton?.set(config)
+        shared.Button = UIControlViewCloseView()
+        shared.Button?.set(config)
         
-        guard let window = shared.keyWindow, let button = shared.CloseButton else { return }
+        guard let window = shared.keyWindow, let button = shared.Button else { return }
         
         forVC.navigationController?.navigationBar.addSubview(button)
         
@@ -181,7 +185,7 @@ public class CloseView {
     
     //MARK: - playFadeInAnimation
     private func playFadeInAnimation() {
-        guard let button = CloseButton else { return }
+        guard let button = Button else { return }
         
         button.alpha = 0
         
@@ -192,7 +196,7 @@ public class CloseView {
     
     //MARK: - playFadeOutAnimation
     private func playFadeOutAnimation(_ completion: ((Bool) -> Void)?) {
-        guard let button = CloseButton else {
+        guard let button = Button else {
             completion?(false)
             return
         }
@@ -211,8 +215,8 @@ public class CloseView {
                     return
                 }
                 
-                shared.CloseButton?.removeFromSuperview()
-                shared.CloseButton = nil
+                shared.Button?.removeFromSuperview()
+                shared.Button = nil
                 
                 DispatchQueue.main.async {
                     completion?()
