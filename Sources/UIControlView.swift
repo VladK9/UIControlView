@@ -58,9 +58,7 @@ class UIControlView {
     }
     
     // Close button config
-    static public var closeTitle: String!
-    static public var closeBackColor: backColor!
-    static public var closeTintColor: tintColor!
+    static public var closeButton = CloseConfig()
     
     // Delegate
     static var delegate: UIControlViewDelegate?
@@ -84,7 +82,7 @@ class UIControlView {
         let config = UIControlViewConfig(cornerRadius: cornerRadius, viewWidth: viewWidth, viewHeight: viewHeight,
                                          showHideIndicator: showHideIndicator, itemsToScroll: itemsToScroll)
         
-        let close = CloseConfig(title: closeTitle, backColor: closeBackColor, tintColor: closeTintColor, action: ({
+        closeButton.action = ({
             UISelectionFeedbackGenerator().selectionChanged()
             
             if queue.count == 1 {
@@ -94,7 +92,7 @@ class UIControlView {
                 closeAll(slideAnimation: showWithSlideAnimation)
                 delegate?.didHideView(.isButton, .isAllClosed)
             }
-        }))
+        })
         
         var uuid = [Int]()
         
@@ -103,7 +101,7 @@ class UIControlView {
                 let defUUID = [UIControlViewID.backViewID, UIControlViewID.containerViewID, UIControlViewID.hideViewID]
                 uuid = defUUID
                 queue.append(UIControlViewQueue(uuid: defUUID, config: config, actions: actions))
-                CloseButton.show(close, forVC: vc)
+                CloseButton.show(closeButton, forVC: vc)
             } else {
                 var wPlus: CGFloat {
                     if queue.count+1 == 1 {
