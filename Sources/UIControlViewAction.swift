@@ -20,7 +20,13 @@ public enum itemSetup {
     case TitleWithIcon(_ title: String, _ icon: UIImage)
 }
 
+public enum selectionConfig {
+    case back(_ backColor: UIColor)
+    case backWithBorder(_ color: UIColor)
+}
+
 public typealias UIControlViewActionHandler = (UIControlViewAction) -> Void
+public typealias UIControlViewSelected = (UIControlViewAction) -> Void
 
 public class UIControlViewAction {
     
@@ -31,7 +37,14 @@ public class UIControlViewAction {
     
     private(set) var handler: UIControlViewActionHandler?
     
-    public init(item: itemSetup, tintColor: itemTintColor = .standard, backColor: itemBackColor = .standard,
+    public var selectionConfig: selectionConfig?
+    public var isPreselected: Bool = false
+    
+    public var isSelected: UIControlViewSelected?
+    public var isUnselected: UIControlViewSelected?
+    
+    public init(item: itemSetup,
+                tintColor: itemTintColor = .standard, backColor: itemBackColor = .standard,
                 handler: @escaping UIControlViewActionHandler) {
         self.item = item
         
@@ -39,6 +52,24 @@ public class UIControlViewAction {
         self.backColor = backColor
         
         self.handler = handler
+    }
+    
+    public init(item: itemSetup,
+                tintColor: itemTintColor = .standard, backColor: itemBackColor = .standard,
+                selectionConfig: selectionConfig = .backWithBorder(.systemBlue),
+                isPreselected: Bool = false,
+                isSelected: @escaping UIControlViewSelected,
+                isUnselected: @escaping UIControlViewSelected) {
+        self.item = item
+        
+        self.tintColor = tintColor
+        self.backColor = backColor
+        
+        self.selectionConfig = selectionConfig
+        self.isPreselected = isPreselected
+        
+        self.isSelected = isSelected
+        self.isUnselected = isUnselected
     }
     
 }
