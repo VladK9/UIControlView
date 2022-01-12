@@ -16,18 +16,19 @@ public struct CloseConfig {
     // Title
     public var title: String!
     
-    // Background color
-    public var backColor: backColor!
-    
     // Text color
     public var tintColor: tintColor!
+    
+    // Background color
+    public var backColor: backColor!
     
     // Action when tap CloseButton
     public var action: (() -> Void)?
     
     public init(title: String = "Close",
-                backColor: backColor = .color(.black), tintColor: tintColor = .auto,
-                action: (() -> Void)?) {
+                tintColor: tintColor = .auto,
+                backColor: backColor = .color(.black),
+                action: (() -> Void)? = nil) {
         self.title = title
         
         self.backColor = backColor
