@@ -121,9 +121,9 @@ let actions: [UIControlViewAction] = [
 ]
       
 view.showHideIndicator = false
-view.closeTitle = "Close"
-view.closeBackColor = .theme(light: .black, dark: .white, any: .white) // .color(.black)
-view.closeTintColor = .auto
+view.closeButton.title = "Close"
+view.closeButton.tintColor = .auto
+view.closeButton.backColor = .theme(light: .black, dark: .white, any: .white) // .color(.black)
 view.showWithSlideAnimation = true
 view.delegate = self
 view.show(self, type: .actions(actions))
@@ -138,9 +138,9 @@ let view = UIControlView.self
 let colors: [UIColor] = [.gray, .systemBlue, .brown, .systemTeal, .systemCyan, .systemPink, .systemRed, .systemMint]
       
 view.showHideIndicator = false
-view.closeTitle = "Close"
-view.closeBackColor = .theme(light: .black, dark: .white, any: .white) // .color(.black)
-view.closeTintColor = .auto
+view.closeButton.title = "Close"
+view.closeButton.tintColor = .auto
+view.closeButton.backColor = .theme(light: .black, dark: .white, any: .white) // .color(.black)
 view.showWithSlideAnimation = true
 view.delegate = self
 view.colorDelegate = self
