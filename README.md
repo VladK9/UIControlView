@@ -68,6 +68,25 @@ Bottom view with infinity actions
    - custom(_ color: UIColor)
    - customHEX(_ hex: String)
    ```
+   ## Item action
+
+   Single action
+    ```swift
+   .init(item: .onlyTitle("Item with single action"), tintColor: .customHEX("#0C5AA9"), backColor: .custom(.blue), handler: { _ in
+   }),
+   ```
+
+   Double action
+   ```swift
+   .init(item: .onlyTitle("Item with double action"),
+         selectionConfig: .backWithBorder(.systemPurple),
+         isPreselected: true,
+         isSelected: { _ in
+            //Selected
+         }, isUnselected: { _ in
+            //Unselected
+         }),
+     ```
    
 - The ability to show one above the other view's
 <p float="left">
@@ -108,26 +127,6 @@ view.closeTintColor = .auto
 view.showWithSlideAnimation = true
 view.delegate = self
 view.show(self, type: .actions(actions))
-```
-
-## Item action
-
-Single action
-```swift
-.init(item: .onlyTitle("Item with single action"), tintColor: .customHEX("#0C5AA9"), backColor: .custom(.blue), handler: { _ in
-}),
-```
-
-Double action
-```swift
-.init(item: .onlyTitle("Item with double action"),
-      selectionConfig: .backWithBorder(.systemPurple),
-      isPreselected: true,
-      isSelected: { _ in
-          //Selected
-      }, isUnselected: { _ in
-          //Unselected
-      }),
 ```
 
 ## Color
