@@ -5,7 +5,7 @@ class UIControlViewCloseView: UIView {
     private var stackView: UIStackView = UIStackView()
     private var containerView: UIView = UIView()
     
-    var currentConfig = CloseConfig(action: { })
+    var currentConfig = CloseConfig()
     
     private var titleLabel: UILabel = {
         let label = UILabel()
