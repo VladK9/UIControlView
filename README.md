@@ -2,7 +2,7 @@
 ### About
 
 <p align="center">
-  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Banner.png">
+  <img src="https://github.com/VladK9/UIControlView/blob/main/Assets/Banner-2.png">
 </p>
 
 Bottom view with infinity actions
