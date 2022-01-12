@@ -91,8 +91,14 @@ let actions: [UIControlViewAction] = [
     }),
     .init(item: .onlyTitle("Item 2"), tintColor: .customHEX("#0C5AA9"), backColor: .custom(.blue), handler: { _ in
     }),
-    .init(item: .onlyIcon(UIImage(systemName: "trash")!), tintColor: .custom(.red), backColor: .custom(.red), handler: { _ in
-    })
+    .init(item: .onlyTitle("Item with double action"),
+          selectionConfig: .backWithBorder(.systemPurple),
+          isPreselected: true,
+          isSelected: { _ in
+              //Selected
+          }, isUnselected: { _ in
+              //Unselected
+          })
 ]
       
 view.showHideIndicator = false
@@ -102,6 +108,26 @@ view.closeTintColor = .auto
 view.showWithSlideAnimation = true
 view.delegate = self
 view.show(self, type: .actions(actions))
+```
+
+## Item action
+
+Single action
+```swift
+.init(item: .onlyTitle("Item with single action"), tintColor: .customHEX("#0C5AA9"), backColor: .custom(.blue), handler: { _ in
+}),
+```
+
+Double action
+```swift
+.init(item: .onlyTitle("Item with double action"),
+      selectionConfig: .backWithBorder(.systemPurple),
+      isPreselected: true,
+      isSelected: { _ in
+          //Selected
+      }, isUnselected: { _ in
+          //Unselected
+      }),
 ```
 
 ## Color
