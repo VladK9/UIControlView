@@ -55,6 +55,34 @@ class UIControlViewHelper {
             alpha: CGFloat(1.0)
         )
     }
+    
+    //MARK: - padding
+    public enum padding {
+        case top
+        case bottom
+    }
+    
+    //MARK: - getPadding(_ padding: padding)
+    static func getPadding(_ padding: padding) -> CGFloat {
+        if #available(iOS 15, *) {
+            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            switch padding {
+            case .top:
+                return (windowScene?.keyWindow?.safeAreaInsets.top)!
+            case .bottom:
+                return (windowScene?.keyWindow?.safeAreaInsets.bottom)!
+            }
+        } else {
+            let window = UIApplication.shared.keyWindow
+            switch padding {
+            case .top:
+                return window?.safeAreaInsets.top ?? 0
+            case .bottom:
+                return window?.safeAreaInsets.bottom ?? 0
+            }
+        }
+    }
+    
 }
 
 // MARK: - Detect gesture direction
