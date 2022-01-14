@@ -79,7 +79,16 @@ class UIControlView {
             return []
         }
         
-        let config = UIControlViewConfig(cornerRadius: cornerRadius, viewWidth: viewWidth, viewHeight: viewHeight,
+        var customHeight: CGFloat {
+            switch type {
+            case .actions(_):
+                return viewHeight
+            case .color(_, _):
+                return 150
+            }
+        }
+        
+        let config = UIControlViewConfig(cornerRadius: cornerRadius, viewWidth: viewWidth, viewHeight: customHeight,
                                          showHideIndicator: showHideIndicator, itemsToScroll: itemsToScroll)
         
         closeButton.action = ({
@@ -113,7 +122,7 @@ class UIControlView {
                     }
                 }
                 
-                let customConfig = UIControlViewConfig(viewWidth: config.viewWidth+wPlus, viewHeight: config.viewHeight,
+                let customConfig = UIControlViewConfig(viewWidth: config.viewWidth+wPlus, viewHeight: customHeight,
                                                        showHideIndicator: config.showHideIndicator,
                                                        itemsToScroll: config.itemsToScroll)
                 
@@ -173,8 +182,7 @@ class UIControlView {
     
     //MARK: - closeFirst
     static private func closeFirst(slideAnimation: Bool = true) {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-        let topPadding = (windowScene.keyWindow?.safeAreaInsets.top)!
+        let topPadding = UIControlViewHelper.getPadding(.top)
         
         UIView.animate(withDuration: animationDuration, animations: {
             if let actionView = currentVC.view.viewWithTag(UIControlViewID.backViewID) {
@@ -197,8 +205,7 @@ class UIControlView {
     
     //MARK: - closeLast
     static func closeLast(slideAnimation: Bool = true) {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-        let topPadding = (windowScene.keyWindow?.safeAreaInsets.top)!
+        let topPadding = UIControlViewHelper.getPadding(.top)
         
         let lastID = queue.last!.uuid![0]
         
@@ -222,8 +229,7 @@ class UIControlView {
     
     //MARK: - closeAll
     static func closeAll(slideAnimation: Bool = true) {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-        let topPadding = (windowScene.keyWindow?.safeAreaInsets.top)!
+        let topPadding = UIControlViewHelper.getPadding(.top)
         
         var allID: [Int] {
             var values = [Int]()
@@ -258,9 +264,8 @@ class UIControlView {
     
     //MARK: - UIControlViewDrag
     @objc static private func UIControlViewDrag(_ sender: UIPanGestureRecognizer) {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-        let topPadding = (windowScene.keyWindow?.safeAreaInsets.top)!
-        let bottomPadding = (windowScene.keyWindow?.safeAreaInsets.bottom)!
+        let topPadding = UIControlViewHelper.getPadding(.top)
+        let bottomPadding = UIControlViewHelper.getPadding(.bottom)
         
         let screen = topPadding + UIScreen.main.bounds.height + bottomPadding
         
@@ -389,9 +394,8 @@ class UIControlView {
     static private func toPosition(_ type: viewType, _ position: presentPosition) -> CGFloat {
         let screen = UIScreen.main.bounds
         
-        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        let topPadding = (windowScene?.keyWindow?.safeAreaInsets.top)!
-        let bottomPadding = (windowScene?.keyWindow?.safeAreaInsets.bottom)!
+        let topPadding = UIControlViewHelper.getPadding(.top)
+        let bottomPadding = UIControlViewHelper.getPadding(.bottom)
         
         var getPrepare: CGFloat {
             if showWithSlideAnimation {
@@ -406,57 +410,22 @@ class UIControlView {
                 if queue.count == 1 {
                     return 0
                 } else if queue.count > 2 {
-                    return CGFloat(4 * queue.count)-4
+                    return CGFloat(3 * queue.count)-3
                 } else {
-                    return 4
+                    return 3
                 }
             }
             
-            var yInd: CGFloat {
-                switch type {
-                case .actions:
-                    if showHideIndicator {
-                        return 3.5
-                    } else {
-                        return 0
-                    }
-                case .color(_,_):
-                    if queue.count == 0 {
-                        if showHideIndicator {
-                            return 3.5
-                        } else {
-                            return 0
-                        }
-                    } else {
-                        if showHideIndicator {
-                            return 38.5
-                        } else {
-                            return 35
-                        }
-                    }
+            var indicator: CGFloat {
+                if showHideIndicator {
+                    return 3.5
                 }
+                return 0
             }
             
-            var customH: CGFloat {
-                let h = queue.last!.config.viewHeight!
-                if h > 100 {
-                    return h/1.25
-                } else if h > 80 {
-                    return h/1.1
-                }
-                
-                return h
-            }
+            let lastHeight = queue.last!.config.viewHeight!
             
-            var viewY: CGFloat {
-                if bottomPadding.isZero {
-                    return screen.height-customH-yInd+topPadding-yPlus
-                } else {
-                    return screen.height-customH-yInd-(bottomPadding*1.3)+topPadding-yPlus
-                }
-            }
-            
-            return viewY
+            return screen.height-lastHeight-bottomSpace+(lastHeight/2)-yPlus-indicator
         }
         
         var getClose: CGFloat {
