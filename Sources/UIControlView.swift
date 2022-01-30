@@ -397,6 +397,14 @@ class UIControlView {
         let topPadding = UIControlViewHelper.getPadding(.top)
         let bottomPadding = UIControlViewHelper.getPadding(.bottom)
         
+        var bottomSpace: CGFloat {
+            if bottomPadding.isZero {
+                return 10
+            } else {
+                return 30
+            }
+        }
+        
         var getPrepare: CGFloat {
             if showWithSlideAnimation {
                 return screen.height + bottomPadding + topPadding + currentConfig.viewHeight
