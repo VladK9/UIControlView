@@ -10,12 +10,14 @@ class UIControlView {
     static private var currentVC = UIViewController()
     static private var currentConfig = UIControlViewConfig()
     
+    static private let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow })!.bounds
+    
     //MARK: - Config
     // viewWidth
-    static public var viewWidth: CGFloat = UIScreen.main.bounds.width-30 {
+    static public var viewWidth: CGFloat = window.width-30 {
         didSet {
-            if viewWidth >= UIScreen.main.bounds.width {
-                viewWidth = UIScreen.main.bounds.width-30
+            if viewWidth >= window.width {
+                viewWidth = window.width-30
             }
         }
     }
@@ -70,12 +72,9 @@ class UIControlView {
     //MARK: - Show
     static func show(_ vc: UIViewController, type: viewType = .actions([])) {
         var actions: [UIControlViewAction] {
-            switch type {
-            case .actions(let allActions):
+            if case .actions(let allActions) = type {
                 return allActions
-            case .color(_,_): break
             }
-            
             return []
         }
         
@@ -163,11 +162,11 @@ class UIControlView {
                 actionView.center.y = toPosition(type, .prepare)
                 
                 UIView.animate(withDuration: animationDuration, animations: {
-                    actionView.center.y = toPosition(type, .show)
+                    actionView.center.y = toPosition(.show)
                 })
             } else {
                 actionView.alpha = 0
-                actionView.center.y = toPosition(type, .show)
+                actionView.center.y = toPosition(.show)
                 
                 UIView.animate(withDuration: animationDuration, animations: {
                     actionView.alpha = 1
@@ -182,12 +181,10 @@ class UIControlView {
     
     //MARK: - closeFirst
     static private func closeFirst(slideAnimation: Bool = true) {
-        let topPadding = UIControlViewHelper.getPadding(.top)
-        
         UIView.animate(withDuration: animationDuration, animations: {
             if let actionView = currentVC.view.viewWithTag(UIControlViewID.backViewID) {
                 if slideAnimation {
-                    actionView.layer.position.y = UIScreen.main.bounds.height + (topPadding*4)
+                    actionView.layer.position.y = toPosition(.close)
                 } else {
                     actionView.alpha = 0
                 }
@@ -205,14 +202,12 @@ class UIControlView {
     
     //MARK: - closeLast
     static func closeLast(slideAnimation: Bool = true) {
-        let topPadding = UIControlViewHelper.getPadding(.top)
-        
         let lastID = queue.last!.uuid![0]
         
         UIView.animate(withDuration: animationDuration, animations: {
             if let actionView = currentVC.view.viewWithTag(lastID) {
                 if slideAnimation {
-                    actionView.layer.position.y = UIScreen.main.bounds.height + (topPadding*4)
+                    actionView.layer.position.y = toPosition(.close)
                 } else {
                     actionView.alpha = 0
                 }
@@ -228,9 +223,7 @@ class UIControlView {
     }
     
     //MARK: - closeAll
-    static func closeAll(slideAnimation: Bool = true) {
-        let topPadding = UIControlViewHelper.getPadding(.top)
-        
+    static func closeAll(slideAnimation: Bool = true) {        
         var allID: [Int] {
             var values = [Int]()
             for index in 0..<queue.count {
@@ -245,7 +238,7 @@ class UIControlView {
             UIView.animate(withDuration: animationDuration, animations: {
                 if let actionView = currentVC.view.viewWithTag(reversedID[index]) {
                     if slideAnimation {
-                        actionView.layer.position.y = UIScreen.main.bounds.height + (topPadding*4)
+                        actionView.layer.position.y = toPosition(.close)
                     } else {
                         actionView.alpha = 0
                     }
@@ -267,14 +260,10 @@ class UIControlView {
         let topPadding = UIControlViewHelper.getPadding(.top)
         let bottomPadding = UIControlViewHelper.getPadding(.bottom)
         
-        let screen = topPadding + UIScreen.main.bounds.height + bottomPadding
+        let screen = topPadding + window.height + bottomPadding
         
         var dismissDragSize: CGFloat {
-            if bottomPadding.isZero {
-                return screen - (topPadding*1.3)
-            } else {
-                return screen - (bottomPadding*4.4)
-            }
+            return bottomPadding.isZero ? screen - (topPadding*1.3) : screen - (bottomPadding*4.4)
         }
         
         switch sender.state {
@@ -391,23 +380,17 @@ class UIControlView {
     }
     
     // MARK: - toPosition()
-    static private func toPosition(_ type: viewType, _ position: presentPosition) -> CGFloat {
-        let screen = UIScreen.main.bounds
-        
+    static private func toPosition(_ position: presentPosition) -> CGFloat {        
         let topPadding = UIControlViewHelper.getPadding(.top)
         let bottomPadding = UIControlViewHelper.getPadding(.bottom)
         
         var bottomSpace: CGFloat {
-            if bottomPadding.isZero {
-                return 10
-            } else {
-                return 30
-            }
+            return bottomPadding.isZero ? 10 : 30
         }
         
         var getPrepare: CGFloat {
             if showWithSlideAnimation {
-                return screen.height + bottomPadding + topPadding + currentConfig.viewHeight
+                return window.height + bottomPadding + topPadding + currentConfig.viewHeight
             } else {
                 return 0.0
             }
@@ -433,11 +416,11 @@ class UIControlView {
             
             let lastHeight = queue.last!.config.viewHeight!
             
-            return screen.height-lastHeight-bottomSpace+(lastHeight/2)-yPlus-indicator
+            return window.height-lastHeight-bottomSpace+(lastHeight/2)-yPlus-indicator
         }
         
         var getClose: CGFloat {
-            return UIScreen.main.bounds.height + (topPadding*4)
+            return window.height + (topPadding*4)
         }
         
         switch position {
