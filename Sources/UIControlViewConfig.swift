@@ -27,7 +27,7 @@ public struct UIControlViewConfig {
     public var itemsToScroll: Int!
     
     public init(cornerRadius: CGFloat = 9,
-                viewWidth: CGFloat = UIScreen.main.bounds.width-30,
+                viewWidth: CGFloat = UIApplication.shared.windows.first(where: { $0.isKeyWindow })!.bounds.width-30,
                 viewHeight: CGFloat = 80,
                 showHideIndicator: Bool = false,
                 itemsToScroll: Int = 5) {
@@ -75,5 +75,6 @@ class UIControlViewColors {
     
     static let mainColor = UIColor(named: "UIControlViewMainColor")
     static let revColor = UIColor(named: "UIControlViewRevMainColor")
+    static let defaultCellColor = UIColor(named: "UIControlViewDefaultCellColor")
     
 }
