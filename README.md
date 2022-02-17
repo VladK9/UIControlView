@@ -68,7 +68,7 @@ Bottom view with infinity actions
    - custom(_ color: UIColor)
    - customHEX(_ hex: String)
    ```
-   ## Item action
+   ### Item action
 
    Single action
     ```swift
