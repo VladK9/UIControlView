@@ -159,7 +159,7 @@ class UIControlView {
             actionView.center.x = currentVC.view.center.x
             
             if showWithSlideAnimation {
-                actionView.center.y = toPosition(type, .prepare)
+                actionView.center.y = toPosition(.prepare)
                 
                 UIView.animate(withDuration: animationDuration, animations: {
                     actionView.center.y = toPosition(.show)
